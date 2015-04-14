@@ -38,9 +38,9 @@ public class MasterCubeGrid : MonoBehaviour
 		}
 		for(int i = 0; i < cols; i++)
 		{
-			addRow ();
+			addRow (false);
 		}
-		movePlayer (5,0, false);
+		movePlayer (5,((int)(UnityEngine.Random.value*10000))%rows, false);
 	}
 
 	public void darken()
@@ -56,8 +56,10 @@ public class MasterCubeGrid : MonoBehaviour
 		{
 			cc.Sort();
 
-			cc[0].gameObject.SetActive(false);
+			//cc[0].gameObject.SetActive(false);
+			var des = cc[0];
 			cc.RemoveAt(0);
+			Destroy (des.gameObject);
 
 			cc[0].setColour('K');
 
@@ -103,11 +105,11 @@ public class MasterCubeGrid : MonoBehaviour
 
 		while(playerX+cols>=cubes[0].Count)
 		{
-			addRow ();
+			addRow (true);
 		}
 	}
 
-	void addRow()
+	void addRow(bool apartheid)
 	{
 		/*
 		 * adds a vertical line of cubes to the right-end
@@ -121,7 +123,12 @@ public class MasterCubeGrid : MonoBehaviour
 			Vector3 pos = new Vector3(cc.Count,0,i);
 			cubes[i].Add((ColourCube) Instantiate(prefab, pos, Quaternion.identity));
 			ColourCube newCube = (ColourCube) cubes[i][cc.Count-1];
-			newCube.setColour(((int)(UnityEngine.Random.value*10000))%7);
+			int cCount = 6;
+			if(apartheid)
+			{
+				cCount++;
+			}
+			newCube.setColour(((int)(UnityEngine.Random.value*10000))%cCount);
 
 			i++;
 		}
