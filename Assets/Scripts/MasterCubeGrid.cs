@@ -7,16 +7,29 @@ public class MasterCubeGrid : MonoBehaviour
 
 	public int rows;
 	public int cols;
+	/*
+	 * Due to the grid's orientation, referencing squares
+	 * 	is done as such
+	 *	
+	 *	cubes[z][x] OR cubes[up&down][left&right]
+	 *	sorry ~_~'
+	 */
 	List<ColourCube>[] cubes;
 
 	public int playerX, playerZ;
-
+	
+	//In the editor, this value is what gameobject
+	//	makes up the grid (it has to have a
+	//	ColourCube component
 	public ColourCube prefab;
 
 	bool inputted = false;
 	
 	void Start()
 	{
+		/*
+		 * An array of lists! What joy to attempt to maintain
+		 */
 		cubes = new List<ColourCube>[rows];
 
 		for (int i = 0; i < rows; i++)
@@ -27,36 +40,67 @@ public class MasterCubeGrid : MonoBehaviour
 		{
 			addRow ();
 		}
-		movePlayer (5,0);
+		movePlayer (5,0, false);
 	}
 
 	public void darken()
 	{
+		/*
+		 * When the dark wall moves
+		 * 		Remove left-most cubes
+		 * 		New left-most cubes become black
+		 * 		If player is on one of these cubes, lose state
+		 * 		All cubes move one unit left
+		 */
 		foreach (List<ColourCube> cc in cubes)
 		{
 			cc.Sort();
+
 			cc[0].gameObject.SetActive(false);
 			cc.RemoveAt(0);
-			cc[0].setVar('K');
+
+			cc[0].setColour('K');
+
+
 			foreach(ColourCube ccc in cc)
 			{
 				ccc.transform.position -= new Vector3(1,0,0);
 			}
-			playerX--;
-			if(playerX==0)
-			{
-				//Lose
-			}
+
+		}
+
+		playerX--;
+		if(playerX==0)
+		{
+			//Lose
 		}
 
 	}
 
-	public void movePlayer(int newX, int newZ)
+	public void movePlayer(int newX, int newZ, bool trueMove)
 	{
-		cubes[playerZ][playerX].player = false;
+		/*
+		 * newX and newZ are where the player's new location is
+		 * trueMove is to designate whether or not to also
+		 * 	increment the darkness and whatever else happens
+		 * 	on a conventional move
+		 */
+		if(trueMove)
+		{
+			cubes[playerZ][playerX].setColour('K');
+		}
+
+		cubes[playerZ][playerX].setPlayer(false);
 		playerX = newX;
 		playerZ = newZ;
-		cubes[playerZ][playerX].player = true;
+		cubes[playerZ][playerX].setPlayer(true);
+
+		if(trueMove)
+		{
+			//check dark value first or whatever as well I guess
+			darken ();
+		}
+
 		while(playerX+cols>=cubes[0].Count)
 		{
 			addRow ();
@@ -65,13 +109,19 @@ public class MasterCubeGrid : MonoBehaviour
 
 	void addRow()
 	{
+		/*
+		 * adds a vertical line of cubes to the right-end
+		 * 	of the grid
+		 * if there is to be manipulation of the colour
+		 * 	placement, it should be here
+		 */
 		int i = 0;
 		foreach (List<ColourCube> cc in cubes)
 		{
 			Vector3 pos = new Vector3(cc.Count,0,i);
 			cubes[i].Add((ColourCube) Instantiate(prefab, pos, Quaternion.identity));
 			ColourCube newCube = (ColourCube) cubes[i][cc.Count-1];
-			newCube.setVar(((int)(UnityEngine.Random.value*10000))%7);
+			newCube.setColour(((int)(UnityEngine.Random.value*10000))%7);
 
 			i++;
 		}
@@ -79,6 +129,10 @@ public class MasterCubeGrid : MonoBehaviour
 
 	void Update()
 	{
+		/*
+		 * This just interprets input
+		 * 	Can be improved
+		 */
 		float inputH = Input.GetAxisRaw("Horizontal");
 		float inputV = Input.GetAxisRaw("Vertical");
 		if(inputted)
@@ -101,10 +155,9 @@ public class MasterCubeGrid : MonoBehaviour
 				{
 					dir = -1;
 				}
-				if(cubes[playerZ][playerX+dir].colour != 'K' && dir != 0)
+				if(dir != 0)
 				{
-					cubes[playerZ][playerX].setVar('K');
-					movePlayer (playerX+dir,playerZ);
+					movePlayer (playerX+dir,playerZ, true);
 					inputted = true;
 				}
 			}
@@ -121,10 +174,9 @@ public class MasterCubeGrid : MonoBehaviour
 				}
 				if(playerZ+dir>=0 && playerZ+dir<rows)
 				{
-					if(cubes[playerZ+dir][playerX].colour != 'K' && dir != 0)
+					if(dir != 0)
 					{
-						cubes[playerZ][playerX].setVar('K');
-						movePlayer (playerX,playerZ+dir);
+						movePlayer (playerX,playerZ+dir,true);
 						inputted = true;
 					}
 				}
