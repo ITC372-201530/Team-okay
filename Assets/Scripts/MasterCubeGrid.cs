@@ -16,12 +16,12 @@ public class MasterCubeGrid : MonoBehaviour
 	 */
 	List<ColourCube>[] cubes;
 
-	public int playerX, playerZ;
 	
 	//In the editor, this value is what gameobject
 	//	makes up the grid (it has to have a
 	//	ColourCube component
 	public ColourCube prefab;
+	public PlayerController player;
 
 	bool inputted = false;
 	
@@ -71,8 +71,8 @@ public class MasterCubeGrid : MonoBehaviour
 
 		}
 
-		playerX--;
-		if(playerX==0)
+		player.setH (player.getH ()-1);
+		if(player.getH ()==0)
 		{
 			//Lose
 		}
@@ -89,21 +89,23 @@ public class MasterCubeGrid : MonoBehaviour
 		 */
 		if(trueMove)
 		{
-			cubes[playerZ][playerX].setColour('K');
+			cubes[player.getV ()][player.getH ()].setColour('K');
 		}
 
-		cubes[playerZ][playerX].setPlayer(false);
-		playerX = newX;
-		playerZ = newZ;
-		cubes[playerZ][playerX].setPlayer(true);
+		cubes[player.getV()][player.getH ()].setPlayer(false);
+		player.setH (newX);
+		player.setV(newZ);
+		cubes[player.getV ()][player.getH ()].setPlayer(true);
 
 		if(trueMove)
 		{
+			player.colourChain( cubes[player.getV()][player.getH()].getColour() );
+
 			//check dark value first or whatever as well I guess
 			darken ();
 		}
 
-		while(playerX+cols>=cubes[0].Count)
+		while(player.getH ()+cols>=cubes[0].Count)
 		{
 			addRow (true);
 		}
@@ -116,6 +118,7 @@ public class MasterCubeGrid : MonoBehaviour
 		 * 	of the grid
 		 * if there is to be manipulation of the colour
 		 * 	placement, it should be here
+		 * Boolean represents whether or not black cubes are allowed
 		 */
 		int i = 0;
 		foreach (List<ColourCube> cc in cubes)
@@ -164,7 +167,7 @@ public class MasterCubeGrid : MonoBehaviour
 				}
 				if(dir != 0)
 				{
-					movePlayer (playerX+dir,playerZ, true);
+					movePlayer (player.getH ()+dir,player.getV(), true);
 					inputted = true;
 				}
 			}
@@ -179,11 +182,11 @@ public class MasterCubeGrid : MonoBehaviour
 				{
 					dir = -1;
 				}
-				if(playerZ+dir>=0 && playerZ+dir<rows)
+				if(player.getV ()+dir>=0 && player.getH ()+dir<rows)
 				{
 					if(dir != 0)
 					{
-						movePlayer (playerX,playerZ+dir,true);
+						movePlayer (player.getH (),player.getV ()+dir,true);
 						inputted = true;
 					}
 				}

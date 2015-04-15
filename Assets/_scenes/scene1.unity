@@ -479,9 +479,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rows: 12
   cols: 15
-  playerX: 0
-  playerZ: 0
   prefab: {fileID: 11484170, guid: 998b8a1a05219c145a3a37e6e934ae32, type: 2}
+  player: {fileID: 1708554886}
 --- !u!4 &1149451285
 Transform:
   m_ObjectHideFlags: 0
@@ -719,7 +718,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   height: .150000006
-  MCG: {fileID: 1149451284}
 --- !u!23 &1708554887
 Renderer:
   m_ObjectHideFlags: 0
