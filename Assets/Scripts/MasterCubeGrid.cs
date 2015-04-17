@@ -12,7 +12,7 @@ public class MasterCubeGrid : MonoBehaviour
 	 * 	is done as such
 	 *	
 	 *	cubes[z][x] OR cubes[up&down][left&right]
-	 *	sorry ~_~'
+	 *
 	 */
 	List<ColourCube>[] cubes;
 
@@ -23,12 +23,18 @@ public class MasterCubeGrid : MonoBehaviour
 	public ColourCube prefab;
 	public PlayerController player;
 
+	public int darknessCounter;
+	public int darknessSpeed;
+
 	bool inputted = false;
-	
+
+	public double score;
+	public double scoreMultiplier;
+
 	void Start()
 	{
 		/*
-		 * An array of lists! What joy to attempt to maintain
+		 * An array of lists
 		 */
 		cubes = new List<ColourCube>[rows];
 
@@ -41,6 +47,12 @@ public class MasterCubeGrid : MonoBehaviour
 			addRow (false);
 		}
 		movePlayer (5,((int)(UnityEngine.Random.value*10000))%rows, false);
+
+		score = 0;
+		scoreMultiplier = 1;
+
+		darknessCounter = 1000;
+		darknessSpeed = 200;
 	}
 
 	public void darken()
@@ -81,6 +93,10 @@ public class MasterCubeGrid : MonoBehaviour
 
 	public void movePlayer(int newX, int newZ, bool trueMove)
 	{
+		darknessCounter -= darknessSpeed;
+		if (darknessSpeed <= 800) 
+			darknessSpeed++;
+
 		/*
 		 * newX and newZ are where the player's new location is
 		 * trueMove is to designate whether or not to also
@@ -97,14 +113,21 @@ public class MasterCubeGrid : MonoBehaviour
 		player.setV(newZ);
 		cubes[player.getV ()][player.getH ()].setPlayer(true);
 
-		if(trueMove)
+		if (trueMove) 
 		{
-			player.colourChain( cubes[player.getV()][player.getH()].getColour() );
+			player.colourChain (cubes [player.getV ()] [player.getH ()].getColour ());
 
-			//check dark value first or whatever as well I guess
-			darken ();
+			//darknessSpeed increases the rate at which darknessCounter
+			//	is decreased. When darknessCounter is below 0, then
+			//	1000 is added to it and further movements continue to
+			// 	decrease its value.
+			if (darknessCounter < 0) 
+			{
+				darken ();
+				darknessCounter += 1000;
+			}
+			score += 10 * scoreMultiplier;
 		}
-
 		while(player.getH ()+cols>=cubes[0].Count)
 		{
 			addRow (true);
@@ -145,6 +168,24 @@ public class MasterCubeGrid : MonoBehaviour
 		 */
 		float inputH = Input.GetAxisRaw("Horizontal");
 		float inputV = Input.GetAxisRaw("Vertical");
+		bool space = Input.GetButton ("Jump");
+
+		if (space) {
+			switch (player.checkAbilityLevel()){
+			case 0:
+			default:
+				break;
+			case 1:
+				Ability.levelOneAbility(this, player);
+				break;
+			case 2:
+				Ability.levelTwoAbility(player);
+				break;
+			case 3:
+				Ability.levelThreeAbility(this, player);
+				break;
+			}
+		}
 		if(inputted)
 		{
 			if(inputH==0&&inputV==0)
@@ -182,7 +223,7 @@ public class MasterCubeGrid : MonoBehaviour
 				{
 					dir = -1;
 				}
-				if(player.getV ()+dir>=0 && player.getH ()+dir<rows)
+				if(player.getV ()+dir>=0 && player.getV ()+dir<rows)
 				{
 					if(dir != 0)
 					{

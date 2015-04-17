@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour 
+{
 
 	public float height;
 	private int playerX, playerZ;
+	public int powerLimit;
+	public int freeCombo;
 
 	/*
 	 * to whoever does colour chains:
@@ -18,8 +21,30 @@ public class PlayerController : MonoBehaviour {
 	public int gPower;
 	public int bPower;
 
+	public int checkAbilityLevel(){
+		int level = 0;
+		if (rPower == powerLimit)
+			level++;
+		if (gPower == powerLimit)
+			level++;
+		if (bPower == powerLimit)
+			level++;
+		return level;
+	}
+
+	public void subtractPowers()
+	{
+		if (rPower == powerLimit)
+			rPower = 0;
+		if (gPower == powerLimit)
+			gPower = 0;
+		if (bPower == powerLimit)
+			bPower = 0;
+	}
+
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
 		transform.position = new Vector3(playerX,height,playerZ);
 	}
 	
@@ -37,6 +62,10 @@ public class PlayerController : MonoBehaviour {
 
 	public void colourChain( char newC )
 	{
+		if (freeCombo > 0) {
+			freeCombo--;
+			lastColour = newC;
+		}
 		if(lastColour != null)
 		{
 			switch(newC)
@@ -115,6 +144,14 @@ public class PlayerController : MonoBehaviour {
 
 			//chain that shit
 		}
+		if (rPower > powerLimit) 
+			rPower = powerLimit;
+		if (gPower > powerLimit) 
+			gPower = powerLimit;
+		if (bPower > powerLimit) 
+			bPower = powerLimit;
+
+
 		lastColour = newC;
 	}
 

@@ -261,6 +261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1708554886}
+  grid: {fileID: 1149451284}
 --- !u!132 &565895817
 GUIText:
   m_ObjectHideFlags: 0
@@ -545,6 +546,10 @@ MonoBehaviour:
   cols: 15
   prefab: {fileID: 11484170, guid: 998b8a1a05219c145a3a37e6e934ae32, type: 2}
   player: {fileID: 1708554886}
+  darknessCounter: 0
+  darknessSpeed: 0
+  score: 0
+  scoreMultiplier: 0
 --- !u!4 &1149451285
 Transform:
   m_ObjectHideFlags: 0
@@ -782,6 +787,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   height: .150000006
+  powerLimit: 100
+  freeCombo: 0
   chain: 0
   rPower: 0
   gPower: 0
@@ -890,7 +897,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: .196078435, g: .196078435, b: .196078435, a: 0}
+  m_BackGroundColor: {r: .274509817, g: .274509817, b: .274509817, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0

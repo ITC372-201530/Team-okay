@@ -4,6 +4,7 @@ using System.Collections;
 public class HUDText : MonoBehaviour {
 
 	public PlayerController player;
+	public MasterCubeGrid grid;
 
 	// Use this for initialization
 	void Start () {
@@ -23,7 +24,13 @@ public class HUDText : MonoBehaviour {
 		display += player.bPower;
 		display += "\n\nCombo:\t\t";
 		display += player.chain;
-	
+		display += "\n\nDarkness Speed:\t\t";
+		display += grid.darknessCounter;
+		display += "\n\nScore:\t\t";
+		display += grid.score;
+		display += "\nScore Muliplier:\t";
+		display += grid.scoreMultiplier;
+
 		guiText.text = display;
 
 	}
