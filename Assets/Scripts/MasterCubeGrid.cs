@@ -46,13 +46,12 @@ public class MasterCubeGrid : MonoBehaviour
 		{
 			addRow (false);
 		}
-		movePlayer (5,((int)(UnityEngine.Random.value*10000))%rows, false);
+		movePlayer (6,(((int)(UnityEngine.Random.value*10000))%(rows-2))+1, false);
 
 		score = 0;
 		scoreMultiplier = 1;
 
 		darknessCounter = 1000;
-		darknessSpeed = 200;
 	}
 
 	public void darken()
@@ -95,7 +94,7 @@ public class MasterCubeGrid : MonoBehaviour
 	{
 		darknessCounter -= darknessSpeed;
 		if (darknessSpeed <= 800) 
-			darknessSpeed++;
+			darknessSpeed+=3;
 
 		/*
 		 * newX and newZ are where the player's new location is
@@ -121,7 +120,7 @@ public class MasterCubeGrid : MonoBehaviour
 			//	is decreased. When darknessCounter is below 0, then
 			//	1000 is added to it and further movements continue to
 			// 	decrease its value.
-			if (darknessCounter < 0) 
+			while (darknessCounter < 0) 
 			{
 				darken ();
 				darknessCounter += 1000;

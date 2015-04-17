@@ -547,7 +547,7 @@ MonoBehaviour:
   prefab: {fileID: 11484170, guid: 998b8a1a05219c145a3a37e6e934ae32, type: 2}
   player: {fileID: 1708554886}
   darknessCounter: 0
-  darknessSpeed: 0
+  darknessSpeed: 200
   score: 0
   scoreMultiplier: 0
 --- !u!4 &1149451285
@@ -787,7 +787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   height: .150000006
-  powerLimit: 100
+  powerLimit: 30
   freeCombo: 0
   chain: 0
   rPower: 0

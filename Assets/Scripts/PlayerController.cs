@@ -150,6 +150,8 @@ public class PlayerController : MonoBehaviour
 			gPower = powerLimit;
 		if (bPower > powerLimit) 
 			bPower = powerLimit;
+		if(chain>10)
+			chain = 10;
 
 
 		lastColour = newC;

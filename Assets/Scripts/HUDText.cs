@@ -16,7 +16,12 @@ public class HUDText : MonoBehaviour {
 	
 		string display = null;
 
-		display += "Red Power:\t";
+		if(player.freeCombo!=0)
+		{
+			display += "Free Combo Left:\t";
+			display += player.freeCombo;
+		}
+		display += "\n\nRed Power:\t";
 		display += player.rPower;
 		display += "\nGreen Power:\t";
 		display += player.gPower;
