@@ -13,6 +13,10 @@ public class PlayerController : MonoBehaviour {
 	 * 	to perhaps make the arithmetic easier.
 	 */
 	public char lastColour;
+	public int chain = 0;
+	public int rPower;
+	public int gPower;
+	public int bPower;
 
 	// Use this for initialization
 	void Start () {
@@ -35,6 +39,80 @@ public class PlayerController : MonoBehaviour {
 	{
 		if(lastColour != null)
 		{
+			switch(newC)
+			{
+			case 'R':
+				if(lastColour == 'R' || lastColour == 'M' || lastColour == 'Y')
+				{
+					chain++;
+					rPower+=chain*2;
+				}
+				else
+				{
+					chain=0;
+				}
+				break;
+			case 'G':
+				if(lastColour == 'G' || lastColour == 'C' || lastColour == 'Y')
+				{
+					chain++;
+					gPower+=chain*2;
+				}
+				else
+				{
+					chain=0;
+				}
+				break;
+			case 'B':
+				if(lastColour == 'B' || lastColour == 'C' || lastColour == 'M')
+				{
+					chain++;
+					bPower+=chain*2;
+				}
+				else
+				{
+					chain=0;
+				}
+				break;
+			case 'C':
+				if(lastColour == 'C' || lastColour == 'B' || lastColour == 'G')
+				{
+					chain++;
+					gPower+=chain;
+					bPower+=chain;
+				}
+				else
+				{
+					chain=0;
+				}
+				break;
+			case 'M':
+				if(lastColour == 'M' || lastColour == 'B' || lastColour == 'R')
+				{
+					chain++;
+					rPower+=chain;
+					bPower+=chain;
+				}
+				else
+				{
+					chain=0;
+				}
+				break;
+			case 'Y':
+				if(lastColour == 'Y' || lastColour == 'R' || lastColour == 'G')
+				{
+					chain++;
+					rPower+=chain;
+					gPower+=chain;
+				}
+				else
+				{
+					chain=0;
+				}
+				break;
+
+			}
+
 			//chain that shit
 		}
 		lastColour = newC;
