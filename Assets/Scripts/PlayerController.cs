@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
 		 * 	(right now, maybe ability resources are here too)
 		 */
 		transform.position = new Vector3(playerX,height,playerZ);
+
 	}
 
 	public void colourChain( char newC )
@@ -138,6 +139,11 @@ public class PlayerController : MonoBehaviour
 				{
 					chain=0;
 				}
+				break;
+			case 'K':
+			{
+				Application.LoadLevel ("GameOver");
+			}
 				break;
 
 			}

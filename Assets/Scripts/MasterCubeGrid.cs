@@ -85,7 +85,7 @@ public class MasterCubeGrid : MonoBehaviour
 		player.setH (player.getH ()-1);
 		if(player.getH ()==0)
 		{
-			//Lose
+			Application.LoadLevel("GameOver");
 		}
 
 	}
