@@ -145,9 +145,18 @@ public class MasterCubeGrid : MonoBehaviour
 		int i = 0;
 		foreach (List<ColourCube> cc in cubes)
 		{
+			// The 3d position for the new cube
 			Vector3 pos = new Vector3(cc.Count,0,i);
-			cubes[i].Add((ColourCube) Instantiate(prefab, pos, Quaternion.identity));
-			ColourCube newCube = (ColourCube) cubes[i][cc.Count-1];
+
+			// This creates a new cube and
+			//		1) adds it to the grid
+			//		2) stores it as newCube;
+			cc.Add((ColourCube) Instantiate(prefab, pos, Quaternion.identity));
+			ColourCube newCube = (ColourCube) cc[cc.Count-1];
+
+			//	cc[cc.Count-2].getColour() is the colour of the cube to the left
+			//	cubes[i-1][cubes[i-1].Count-1].getColour() is the colour of the
+			//		cube created before this one (obv error if i==0)
 			int cCount = 6;
 			if(apartheid)
 			{
