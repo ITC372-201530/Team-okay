@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
 	public int gPower;
 	public int bPower;
 
+
 	public int checkAbilityLevel(){
 		int level = 0;
 		if (rPower == powerLimit)
@@ -83,7 +84,7 @@ public class PlayerController : MonoBehaviour
 				break;
 			case 'G':
 				if(lastColour == 'G' || lastColour == 'C' || lastColour == 'Y')
-				{
+				{		
 					chain++;
 					gPower+=chain*2;
 				}
@@ -155,6 +156,7 @@ public class PlayerController : MonoBehaviour
 
 
 		lastColour = newC;
+
 	}
 
 	public int getH()
