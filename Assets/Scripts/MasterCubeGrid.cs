@@ -164,20 +164,25 @@ public class MasterCubeGrid : MonoBehaviour
 			//	cubes[i-1][cubes[i-1].Count-1].getColour() is the colour of the
 			//		cube created before this one (obv error if i==0)
 		
-
+			char lastColour;
 			int cCount = 6;
 			if(apartheid)
 			{
 				cCount++;
-			}
 
-			if (i != 0)
-			{
-				if (cubes[i-1][cubes[i-1].Count-1].getColour() = "k" && apartheid)
-				{
-					cCount--;
+				if (i != 0)
+				{ 
+					lastColour = cubes[i-1][cubes[i-1].Count-1].getColour();
+
+					if (lastColour.Equals('K'))
+					{
+
+						cCount--;
+					}
 				}
 			}
+
+
 
 			newCube.setColour(((int)(UnityEngine.Random.value*10000))%cCount);
 
