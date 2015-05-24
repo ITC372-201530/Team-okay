@@ -4,8 +4,8 @@ using System.Collections;
 public class CameraController : MonoBehaviour {
 
 	public PlayerController player;
+	private float posX;
 	private float posY;
-	private float posZ;
 
 	// Use this for initialization
 	void Start () {
@@ -13,8 +13,8 @@ public class CameraController : MonoBehaviour {
 		 * Store the initial y & z positions, so that the original
 		 * transform position has relevance
 		 */
+		posX = transform.position.x;
 		posY = transform.position.y;
-		posZ = transform.position.z;
 	}
 	
 	// Update is called once per frame
@@ -25,7 +25,7 @@ public class CameraController : MonoBehaviour {
 		 */
 		if(transform.position.x!= player.transform.position.x)
 		{
-			transform.position = new Vector3(player.transform.position.x,posY,posZ);
+			transform.position = new Vector3(player.transform.position.x + posX, posY, transform.position.z);
 		}
 	}
 }

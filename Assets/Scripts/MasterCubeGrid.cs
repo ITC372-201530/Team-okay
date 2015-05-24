@@ -94,7 +94,7 @@ public class MasterCubeGrid : MonoBehaviour
 	{
 		darknessCounter -= darknessSpeed;
 		if (darknessSpeed <= 800) 
-			darknessSpeed+=4;
+			darknessSpeed+=3;
 
 		/*
 		 * newX and newZ are where the player's new location is
@@ -116,7 +116,9 @@ public class MasterCubeGrid : MonoBehaviour
 		{
 			player.colourChain (cubes [player.getV ()] [player.getH ()].getColour ());
 
-
+			if (player.chain == 0)
+				darknessCounter -= 1000;
+			
 			//darknessSpeed increases the rate at which darknessCounter
 			//	is decreased. When darknessCounter is below 0, then
 			//	1000 is added to it and further movements continue to
