@@ -6,6 +6,8 @@ public class HUDText : MonoBehaviour {
 	public PlayerController player;
 	public MasterCubeGrid grid;
 
+
+
 	// Use this for initialization
 	void Start () {
 	

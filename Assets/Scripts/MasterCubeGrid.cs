@@ -31,8 +31,11 @@ public class MasterCubeGrid : MonoBehaviour
 	public double score;
 	public double scoreMultiplier;
 
+
+
 	void Start()
 	{
+	
 		/*
 		 * An array of lists
 		 */
@@ -85,7 +88,8 @@ public class MasterCubeGrid : MonoBehaviour
 		player.setH (player.getH ()-1);
 		if(player.getH ()==0)
 		{
-			//Lose
+
+			Application.LoadLevel("GameOver");
 		}
 
 	}
@@ -128,7 +132,9 @@ public class MasterCubeGrid : MonoBehaviour
 				darken ();
 				darknessCounter += 1000;
 			}
+			PlayerPrefs.SetString("PScore", System.Convert.ToString (score));
 			score += 10 * scoreMultiplier;
+
 		}
 		while(player.getH ()+cols>=cubes[0].Count)
 		{
@@ -160,11 +166,27 @@ public class MasterCubeGrid : MonoBehaviour
 			//	cc[cc.Count-2].getColour() is the colour of the cube to the left
 			//	cubes[i-1][cubes[i-1].Count-1].getColour() is the colour of the
 			//		cube created before this one (obv error if i==0)
+		
+			char lastColour;
 			int cCount = 6;
 			if(apartheid)
 			{
 				cCount++;
+
+				if (i != 0)
+				{ 
+					lastColour = cubes[i-1][cubes[i-1].Count-1].getColour();
+
+					if (lastColour.Equals('K'))
+					{
+
+						cCount--;
+					}
+				}
 			}
+
+
+
 			newCube.setColour(((int)(UnityEngine.Random.value*10000))%cCount);
 
 			i++;
