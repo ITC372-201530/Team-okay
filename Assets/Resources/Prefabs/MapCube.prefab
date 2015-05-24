@@ -38,7 +38,7 @@ Renderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 184170}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_LightmapIndex: 255
@@ -97,8 +97,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a6964a7d2acbad4fb06683a6a9a3e10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: 0
-  zDepth: 0
+  RacRed: {fileID: 9100000, guid: 7eebc1a74b9330548b80ad2d1e72c528, type: 2}
+  RacGreen: {fileID: 9100000, guid: d4b5565701f982e4e9d3a91622d6879e, type: 2}
+  RacBlue: {fileID: 9100000, guid: 9b72c2f92d5b30e48869e604d98d59b3, type: 2}
+  RacCyan: {fileID: 9100000, guid: de62f5548997bf3478e83de17ff39f58, type: 2}
+  RacMagenta: {fileID: 9100000, guid: cb28aa65fcf40dd439e36577dd13c801, type: 2}
+  RacYellow: {fileID: 9100000, guid: c777ae8f312aa9d4eabf73ab8920fcc9, type: 2}
+  red: {fileID: 100250, guid: badbd99483c00494c8c88468310e556d, type: 3}
+  green: {fileID: 100250, guid: 75a325f7486cc6f4eb7f9a837b75ecd8, type: 3}
+  blue: {fileID: 100250, guid: 94b3025f3082bf74ea8b4529b59500e1, type: 3}
+  cyan: {fileID: 100250, guid: 3e3784d754a92704492e405029369ac9, type: 3}
+  magenta: {fileID: 100250, guid: 4a273e00ddaf1a64eb3590559dae6979, type: 3}
+  yellow: {fileID: 100250, guid: f06f41af38d33f14daf5fb02e37d278e, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

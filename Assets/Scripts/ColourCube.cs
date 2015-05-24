@@ -12,12 +12,22 @@ public class ColourCube : MonoBehaviour, IComparable<ColourCube> {
 	private bool player;
 	private bool spawning;
 
+	private GameObject childCube;
+	public RuntimeAnimatorController RacRed, RacGreen, RacBlue, RacCyan, RacMagenta, RacYellow;
+
+	public GameObject red;
+	public GameObject green;
+	public GameObject blue;
+	public GameObject cyan;
+	public GameObject magenta;
+	public GameObject yellow;
+
 	// Use this for initialization
 	void Start () {
 		//	spawning indicates whether or not the cube is rising
 		spawning = true;
 		//	this is the initial height that the cube rises from
-		transform.position += new Vector3(0,-3,0);
+		transform.position += new Vector3(0,-1,0);
 		//	changes the cube to display its colour
 		//		(probably always magenta initially)
 		changeColour ();
@@ -103,31 +113,59 @@ public class ColourCube : MonoBehaviour, IComparable<ColourCube> {
 		 * 	a layer, so that the correct lights are
 		 * 	applied to this cube
 		 */
+
+		if(childCube!=null)
+		{
+			Destroy (childCube.gameObject);
+		}
+
+		
+		GameObject cubeType;
+		RuntimeAnimatorController Rac;
+
 		switch (colour)
 		{
 		case 'R':
-			gameObject.layer = 9;
+			cubeType = red;
+			Rac = RacRed;
 			break;
 		case 'G':
-			gameObject.layer = 10;
+			cubeType = green;
+			Rac = RacGreen;
 			break;
 		case 'B':
-			gameObject.layer = 11;
+			cubeType = blue;
+			Rac = RacBlue;
 			break;
 		case 'C':
-			gameObject.layer = 12;
+			cubeType = cyan;
+			Rac = RacCyan;
 			break;
 		case 'M':
-			gameObject.layer = 13;
+			cubeType = magenta;
+			Rac = RacMagenta;
 			break;
 		case 'Y':
-			gameObject.layer = 14;
+			cubeType = yellow;
+			Rac = RacYellow;
 			break;
 		case 'K':
 		default:
-			gameObject.layer = 15;
+			cubeType = yellow;
+			Rac = RacYellow;
 			break;
 		}
+
+		childCube = (GameObject) Instantiate(cubeType, transform.position, Quaternion.identity);
+		childCube.transform.parent = transform;	
+		Animator animator = childCube.gameObject.GetComponent<Animator>();
+		animator.runtimeAnimatorController = Rac;
+		//childCube.animation.Play("Create");
+		if(colour == 'K')
+		{
+			childCube.gameObject.layer = 15;
+		}
+
 	}
 
 	public int CompareTo(ColourCube other)
