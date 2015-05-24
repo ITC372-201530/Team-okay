@@ -162,7 +162,7 @@ public class MasterCubeGrid : MonoBehaviour
 			//		2) stores it as newCube;
 			cc.Add((ColourCube) Instantiate(prefab, pos, Quaternion.identity));
 			ColourCube newCube = (ColourCube) cc[cc.Count-1];
-
+			newCube.transform.parent = transform;
 			//	cc[cc.Count-2].getColour() is the colour of the cube to the left
 			//	cubes[i-1][cubes[i-1].Count-1].getColour() is the colour of the
 			//		cube created before this one (obv error if i==0)

@@ -56,17 +56,17 @@ public class ColourCube : MonoBehaviour, IComparable<ColourCube> {
 		//	shitty flicker code for black cubes
 		//	uses the "default" layer, same as player sphere
 		//		therefore has the same lighting and cameras
-		if(colour == 'K')
-		{
-			if (UnityEngine.Random.value <= 0.001)
-			{
-				gameObject.layer = 0;
-			}
-			else
-			{
-				gameObject.layer = 15;
-			}
-		}
+//		if(colour == 'K')
+//		{
+//			if (UnityEngine.Random.value <= 0.001)
+//			{
+//				gameObject.layer = 0;
+//			}
+//			else
+//			{
+//				gameObject.layer = 15;
+//			}
+//		}
 	}
 
 	public void setColour (int c)

@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerController : MonoBehaviour 
 {
 
-	public float height;
+	private float height;
 	private int playerX, playerZ;
 	public int powerLimit;
 	public int freeCombo;
@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		height = transform.position.y;
 		transform.position = new Vector3(playerX,height,playerZ);
 	}
 	
@@ -85,7 +86,7 @@ public class PlayerController : MonoBehaviour
 				break;
 			case 'G':
 				if(lastColour == 'G' || lastColour == 'C' || lastColour == 'Y')
-				{		
+				{
 					chain++;
 					gPower+=chain*2;
 				}
