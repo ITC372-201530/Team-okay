@@ -49,8 +49,8 @@ public class MasterCubeGrid : MonoBehaviour
 		{
 			addRow (false);
 		}
-		movePlayer (6,(((int)(UnityEngine.Random.value*10000))%(rows-2))+1, false);
-
+		//movePlayer (6,(((int)(UnityEngine.Random.value*10000))%(rows-2))+1, false);
+		movePlayer (6,rows/2, false);
 		score = 0;
 		scoreMultiplier = 1;
 
@@ -86,6 +86,7 @@ public class MasterCubeGrid : MonoBehaviour
 		}
 
 		player.setH (player.getH ()-1);
+		player.transform.position += new Vector3(-1,0,0);
 		if(player.getH ()==0)
 		{
 

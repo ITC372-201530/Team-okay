@@ -149,22 +149,18 @@ public class ColourCube : MonoBehaviour, IComparable<ColourCube> {
 			cubeType = yellow;
 			Rac = RacYellow;
 			break;
-		case 'K':
 		default:
-			cubeType = yellow;
-			Rac = RacYellow;
-			break;
+			return;
 		}
-
+		
 		childCube = (GameObject) Instantiate(cubeType, transform.position, Quaternion.identity);
-		childCube.transform.parent = transform;	
+		childCube.transform.parent = transform;
+		childCube.transform.localPosition = new Vector3(0.4f, -0.5f, 0.4f);
+		childCube.transform.localScale = Vector3.one * 4;
 		Animator animator = childCube.gameObject.GetComponent<Animator>();
 		animator.runtimeAnimatorController = Rac;
+		animator.speed = UnityEngine.Random.value / 4 + .75f;
 		//childCube.animation.Play("Create");
-		if(colour == 'K')
-		{
-			childCube.gameObject.layer = 15;
-		}
 
 	}
 

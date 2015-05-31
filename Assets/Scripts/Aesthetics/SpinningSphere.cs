@@ -4,14 +4,16 @@ using System.Collections;
 public class SpinningSphere : MonoBehaviour {
 
 	public float angle;
+	private Vector3 loc;
 
 	// Use this for initialization
 	void Start () {
+		loc = transform.position;
 		applyRotation ();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
 		
 		angle += Time.deltaTime*20;
 		if (angle >= 360) {
@@ -30,6 +32,6 @@ public class SpinningSphere : MonoBehaviour {
 		float xN = cs - sn;
 		float yN = sn + cs;
 
-		transform.position = new Vector3 (xN*3, yN*3, 30);
+		transform.position = new Vector3 (xN*3, yN*3, 0) + loc;
 	}
 }

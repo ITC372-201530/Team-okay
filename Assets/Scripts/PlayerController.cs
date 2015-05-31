@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
 	void Start () 
 	{
 		height = transform.position.y;
-		transform.position = new Vector3(playerX,height,playerZ);
+		//transform.position = new Vector3(playerX,height,playerZ);
 	}
 	
 	// Update is called once per frame
@@ -59,7 +59,17 @@ public class PlayerController : MonoBehaviour
 		 * 	doing little more than displaying that position
 		 * 	(right now, maybe ability resources are here too)
 		 */
-		transform.position = new Vector3(playerX,height,playerZ);
+		Vector3 positionDiff = new Vector3(playerX,height,playerZ) - transform.position;
+		float mag = positionDiff.magnitude;
+		if(positionDiff.magnitude > Time.deltaTime)
+		{
+			if(mag < 1)
+			{
+				positionDiff = positionDiff.normalized;
+			}
+			transform.position += (positionDiff) * Time.deltaTime * 2;
+		}
+
 
 	}
 
