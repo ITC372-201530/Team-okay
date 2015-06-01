@@ -2082,12 +2082,12 @@ AudioSource:
   m_GameObject: {fileID: 2072512711}
   m_Enabled: 1
   serializedVersion: 3
-  m_audioClip: {fileID: 8300000, guid: aeb8f796b54b05141829e66c74be7c75, type: 3}
+  m_audioClip: {fileID: 8300000, guid: ffcede361a63a2449bbb3d2dc1c9dee4, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
-  Mute: 1
+  Mute: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1

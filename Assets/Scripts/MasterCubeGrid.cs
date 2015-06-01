@@ -33,6 +33,7 @@ public class MasterCubeGrid : MonoBehaviour
 
 
 
+
 	void Start()
 	{
 	
@@ -66,6 +67,7 @@ public class MasterCubeGrid : MonoBehaviour
 		 * 		If player is on one of these cubes, lose state
 		 * 		All cubes move one unit left
 		 */
+
 		foreach (List<ColourCube> cc in cubes)
 		{
 			cc.Sort();
@@ -84,7 +86,6 @@ public class MasterCubeGrid : MonoBehaviour
 			}
 
 		}
-
 		player.setH (player.getH ()-1);
 		player.transform.position += new Vector3(-1,0,0);
 		if(player.getH ()==0)
