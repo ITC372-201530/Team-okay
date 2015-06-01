@@ -14,6 +14,9 @@ public class FormChangeClick : MonoBehaviour {
 	}
 
 	public void OnMouseDown () {
+		if (level == "quit")
+			Application.Quit ();
+		else 
 		Application.LoadLevel (level);
 	}
 }
