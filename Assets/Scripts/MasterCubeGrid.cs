@@ -45,7 +45,7 @@ public class MasterCubeGrid : MonoBehaviour
 		{
 			cubes[i] = new List<ColourCube>();
 		}
-		for(int i = 0; i < cols; i++)
+		for(int i = 0; i < cols*2; i++)
 		{
 			addRow (false);
 		}

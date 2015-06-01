@@ -5,7 +5,7 @@ using System;
 public class ColourCube : MonoBehaviour, IComparable<ColourCube> {
 
 	public char colour = 'M';
-	private static char[] colourChars = {'R','Y','G','C','B','M','K'};
+	public static char[] colourChars = {'R','Y','G','C','B','M','K'};
 	static int cubeCount = 0;
 	private int zDepth;
 	

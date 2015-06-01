@@ -3,14 +3,38 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class PowerBar : Graphic 
 {
 
-	public PlayerController player;
+	public PowerBarPanel pbp;
 	public int bar;
+	public float length;
 
 
+	void Start()
+	{
+	}
+
+	void LateUpdate()
+	{
+		rectTransform.localScale = new Vector3(pbp.getLength(bar),rectTransform.localScale.y,1f);
+		Color c = pbp.getColour(bar);
+		if(!pbp.isGlow(bar))
+		{
+			color = c;
+		}
+		else
+		{
+			float glow = pbp.getGlow();
+			float[] v3 = new float[3];
+			v3[0] = (1-c.r)*glow + c.r;
+			v3[1] = (1-c.g)*glow + c.g;
+			v3[2] = (1-c.b)*glow + c.b;
+			color = new Color( v3[0],v3[1],v3[2] );
+			glow = (glow+0.05f)%0.5f;
+		}
+	}
 
 	protected override void OnFillVBO (List<UIVertex> vbo)
 	{
@@ -37,7 +61,7 @@ public class PowerBar : Graphic
 		UIVertex vert = UIVertex.simpleVert;
 		
 		vert.position = new Vector2(corner1.x, corner1.y);
-		vert.color = new Color(1,0,0);
+		vert.color = color;
 		vbo.Add(vert);
 		
 		vert.position = new Vector2(corner1.x, corner2.y);
