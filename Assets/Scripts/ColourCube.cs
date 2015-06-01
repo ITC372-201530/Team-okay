@@ -155,11 +155,11 @@ public class ColourCube : MonoBehaviour, IComparable<ColourCube> {
 		
 		childCube = (GameObject) Instantiate(cubeType, transform.position, Quaternion.identity);
 		childCube.transform.parent = transform;
-		childCube.transform.localPosition = new Vector3(0.4f, -0.5f, 0.4f);
-		childCube.transform.localScale = Vector3.one * 4;
-		Animator animator = childCube.gameObject.GetComponent<Animator>();
-		animator.runtimeAnimatorController = Rac;
-		animator.speed = UnityEngine.Random.value / 4 + .75f;
+		childCube.transform.localPosition = new Vector3(0, -0.5f, 0);
+		//childCube.transform.localScale = Vector3.one * 4;
+		//Animator animator = childCube.gameObject.GetComponent<Animator>();
+		//animator.runtimeAnimatorController = Rac;
+		//animator.speed = UnityEngine.Random.value / 4 + .75f;
 		//childCube.animation.Play("Create");
 
 	}
