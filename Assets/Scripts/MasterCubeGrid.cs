@@ -30,7 +30,10 @@ public class MasterCubeGrid : MonoBehaviour
 
 	public double score;
 	public double scoreMultiplier;
-
+	
+	private AudioSource audioSource;
+	public AudioClip darkenSound, abilityOneUse, abilityOneDeny,
+	abilityTwoUse, abilityThreeUse;
 
 
 
@@ -52,10 +55,13 @@ public class MasterCubeGrid : MonoBehaviour
 		}
 		//movePlayer (6,(((int)(UnityEngine.Random.value*10000))%(rows-2))+1, false);
 		movePlayer (6,rows/2, false);
+		player.lastColour = cubes[player.getV()][player.getH()].colour;
 		score = 0;
 		scoreMultiplier = 1;
 
 		darknessCounter = 1000;
+		
+		audioSource = GetComponent<AudioSource>();
 	}
 
 	public void darken()
@@ -93,6 +99,8 @@ public class MasterCubeGrid : MonoBehaviour
 
 			Application.LoadLevel("GameOver");
 		}
+		audioSource.clip = darkenSound;
+		audioSource.Play();
 
 	}
 
@@ -134,7 +142,7 @@ public class MasterCubeGrid : MonoBehaviour
 				darken ();
 				darknessCounter += 1000;
 			}
-			PlayerPrefs.SetString("PScore", System.Convert.ToString (score));
+			PlayerPrefs.SetString("PScore", (score/10).ToString("0.00") );
 			score += 10 * scoreMultiplier;
 
 		}
@@ -211,13 +219,26 @@ public class MasterCubeGrid : MonoBehaviour
 			default:
 				break;
 			case 1:
-				Ability.levelOneAbility(this, player);
+				if(player.chain < 5)
+				{
+					Ability.levelOneAbility(this, player);
+					audioSource.clip = abilityOneUse;
+				}
+				else
+				{
+					audioSource.clip = abilityOneDeny;
+				}
+				audioSource.Play ();
 				break;
 			case 2:
 				Ability.levelTwoAbility(player);
+				audioSource.clip = abilityTwoUse;
+				audioSource.Play ();
 				break;
 			case 3:
 				Ability.levelThreeAbility(this, player);
+				audioSource.clip = abilityThreeUse;
+				audioSource.Play ();
 				break;
 			}
 		}

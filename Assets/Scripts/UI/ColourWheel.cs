@@ -149,7 +149,7 @@ public class ColourWheel : Graphic
 		corner2.y *= rectTransform.rect.height;
 		
 		vbo.Clear();
-		
+
 		UIVertex vert = UIVertex.simpleVert;
 		
 		vert.position = new Vector2(corner1.x, corner1.y);

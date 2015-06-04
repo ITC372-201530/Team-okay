@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
 	private int playerX, playerZ;
 	public int powerLimit;
 	public int freeCombo;
+	public Animation modelAnimation;
+	private int lastPowerSoundPlayed;
 
 	/*
 	 * to whoever does colour chains:
@@ -20,6 +22,10 @@ public class PlayerController : MonoBehaviour
 	public int rPower;
 	public int gPower;
 	public int bPower;
+
+	private AudioSource audioSource;
+	public AudioClip chainBreak, move1, move2, move3, move4, move5, abilityOneReady, abilityTwoReady, abilityThreeReady;
+	public AudioSource abilityAudioSource;
 
 
 	public int checkAbilityLevel(){
@@ -41,6 +47,7 @@ public class PlayerController : MonoBehaviour
 			gPower = 0;
 		if (bPower == powerLimit)
 			bPower = 0;
+		lastPowerSoundPlayed = 0;
 	}
 
 	// Use this for initialization
@@ -48,6 +55,7 @@ public class PlayerController : MonoBehaviour
 	{
 		height = transform.position.y;
 		//transform.position = new Vector3(playerX,height,playerZ);
+		audioSource = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -68,6 +76,12 @@ public class PlayerController : MonoBehaviour
 				positionDiff = positionDiff.normalized;
 			}
 			transform.position += (positionDiff) * Time.deltaTime * 2;
+			transform.rotation = Quaternion.LookRotation (positionDiff);
+			modelAnimation.Play("Jumping");
+		}
+		else
+		{
+			modelAnimation.Play("Idle");
 		}
 
 
@@ -173,6 +187,50 @@ public class PlayerController : MonoBehaviour
 
 
 		lastColour = newC;
+
+		if(chain == 0)
+		{
+			audioSource.clip = chainBreak;
+		}
+		else if(chain <= 3)
+		{
+			audioSource.clip = move1;
+		}
+		else if(chain <= 5)
+		{
+			audioSource.clip = move2;
+		}
+		else if(chain <= 7)
+		{
+			audioSource.clip = move3;
+		}
+		else if(chain <= 9)
+		{
+			audioSource.clip = move4;
+		}
+		else
+		{
+			audioSource.clip = move5;
+		}
+		audioSource.Play();
+
+		if(lastPowerSoundPlayed < checkAbilityLevel())
+		{
+			switch(checkAbilityLevel())
+			{
+			case 1:
+				abilityAudioSource.clip = abilityOneReady;
+				break;
+			case 2:
+				abilityAudioSource.clip = abilityTwoReady;
+				break;
+			case 3:
+				abilityAudioSource.clip = abilityThreeReady;
+				break;
+			}
+			abilityAudioSource.Play ();
+			lastPowerSoundPlayed = checkAbilityLevel();
+		}
 
 	}
 

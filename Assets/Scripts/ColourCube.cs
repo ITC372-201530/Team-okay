@@ -13,7 +13,6 @@ public class ColourCube : MonoBehaviour, IComparable<ColourCube> {
 	private bool spawning;
 
 	private GameObject childCube;
-	public RuntimeAnimatorController RacRed, RacGreen, RacBlue, RacCyan, RacMagenta, RacYellow;
 
 	public GameObject red;
 	public GameObject green;
@@ -127,27 +126,21 @@ public class ColourCube : MonoBehaviour, IComparable<ColourCube> {
 		{
 		case 'R':
 			cubeType = red;
-			Rac = RacRed;
 			break;
 		case 'G':
 			cubeType = green;
-			Rac = RacGreen;
 			break;
 		case 'B':
 			cubeType = blue;
-			Rac = RacBlue;
 			break;
 		case 'C':
 			cubeType = cyan;
-			Rac = RacCyan;
 			break;
 		case 'M':
 			cubeType = magenta;
-			Rac = RacMagenta;
 			break;
 		case 'Y':
 			cubeType = yellow;
-			Rac = RacYellow;
 			break;
 		default:
 			return;
@@ -157,9 +150,11 @@ public class ColourCube : MonoBehaviour, IComparable<ColourCube> {
 		childCube.transform.parent = transform;
 		childCube.transform.localPosition = new Vector3(0, -0.5f, 0);
 		//childCube.transform.localScale = Vector3.one * 4;
-		//Animator animator = childCube.gameObject.GetComponent<Animator>();
+		Animation anim = childCube.gameObject.GetComponent<Animation>();
 		//animator.runtimeAnimatorController = Rac;
-		//animator.speed = UnityEngine.Random.value / 4 + .75f;
+		foreach (AnimationState state in anim) {
+			state.speed = UnityEngine.Random.value / 4 + .75f;
+		}
 		//childCube.animation.Play("Create");
 
 	}

@@ -103,11 +103,11 @@ MonoBehaviour:
   RacCyan: {fileID: 9100000, guid: de62f5548997bf3478e83de17ff39f58, type: 2}
   RacMagenta: {fileID: 9100000, guid: cb28aa65fcf40dd439e36577dd13c801, type: 2}
   RacYellow: {fileID: 9100000, guid: c777ae8f312aa9d4eabf73ab8920fcc9, type: 2}
-  red: {fileID: 100054, guid: 6c78a563529625346908c1998c65fccf, type: 3}
-  green: {fileID: 100054, guid: 3b883be1874711e46a4e76dec949eede, type: 3}
-  blue: {fileID: 100054, guid: 765942e1cf58fa248b469d8fcde3f118, type: 3}
-  cyan: {fileID: 100054, guid: 5bf66342864ca9c46b5b2d15ec54d3cc, type: 3}
-  magenta: {fileID: 100054, guid: 12ce2eb795770664984c984045706bf4, type: 3}
+  red: {fileID: 100054, guid: f359b0d106cff67429a8df09215dcb1e, type: 3}
+  green: {fileID: 100054, guid: 2821ef6133a361f4ca5fc3109103b4c2, type: 3}
+  blue: {fileID: 100054, guid: ef3d5811c33691d429f13a9e7106d8bb, type: 3}
+  cyan: {fileID: 100054, guid: 6c25c53d74abe66438ec55ef5d2bdcfb, type: 3}
+  magenta: {fileID: 100054, guid: ba7ee9c3e7346304bb6f8636d4d8ca39, type: 3}
   yellow: {fileID: 100054, guid: 13516af26de39de4ab60b87a86c0d4aa, type: 3}
 --- !u!1001 &100100000
 Prefab:

@@ -4,8 +4,12 @@ using System.Collections;
 public class Ability {
 
 	static public void levelOneAbility(MasterCubeGrid mcg, PlayerController player){
-		mcg.darknessSpeed -= 10;
-		player.subtractPowers();
+		if(player.chain < 5)
+		{
+			player.chain = 5;
+			player.subtractPowers();
+
+		}
 	}
 
 	static public void levelTwoAbility(PlayerController player){
