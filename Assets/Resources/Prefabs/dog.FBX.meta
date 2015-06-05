@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d7d1c96c5c7159b4899104e98b92aa5b
+guid: fb1eeb1afe5d55f41b047b637ab804e2
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -21,12 +21,15 @@ ModelImporter:
     100030: Bone016
     100032: Bone017
     100034: Bone018
-    100036: Bone019
-    100038: Bone020
-    100040: Bone021
-    100042: Bone022
-    100044: Cybergirl
-    100046: //RootNode
+    100036: BoneDog
+    100038: Cylinder002
+    100040: //RootNode
+    100042: Head
+    100044: High Poly
+    100046: Leg
+    100048: Leg001
+    100050: Low Poly
+    100052: old attempt
     400000: Bone001
     400002: Bone002
     400004: Bone003
@@ -45,18 +48,39 @@ ModelImporter:
     400030: Bone016
     400032: Bone017
     400034: Bone018
-    400036: Bone019
-    400038: Bone020
-    400040: Bone021
-    400042: Bone022
-    400044: Cybergirl
-    400046: //RootNode
-    4300000: Cybergirl
+    400036: BoneDog
+    400038: Cylinder002
+    400040: //RootNode
+    400042: Head
+    400044: High Poly
+    400046: Leg
+    400048: Leg001
+    400050: Low Poly
+    400052: old attempt
+    2300000: Cylinder002
+    2300002: Head
+    2300004: High Poly
+    2300006: Leg
+    2300008: Leg001
+    2300010: Low Poly
+    3300000: Cylinder002
+    3300002: Head
+    3300004: High Poly
+    3300006: Leg
+    3300008: Leg001
+    3300010: Low Poly
+    4300000: Cylinder002
+    4300002: Head
+    4300004: Leg
+    4300006: Leg001
+    4300008: Low Poly
+    4300010: High Poly
+    4300012: BoneDog
     7400000: Idle
     7400002: Moving
     9500000: //RootNode
     11100000: //RootNode
-    13700000: Cybergirl
+    13700000: BoneDog
   materials:
     importMaterials: 1
     materialName: 0
@@ -77,8 +101,8 @@ ModelImporter:
       name: Idle
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 100
-      wrapMode: 4
+      lastFrame: 30
+      wrapMode: 2
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
@@ -99,17 +123,17 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: Bone001
+      - path: Bone003
         weight: 1
-      - path: Bone001/Bone002
+      - path: Bone003/Bone002
         weight: 1
-      - path: Bone001/Bone002/Bone003
+      - path: Bone003/Bone002/Bone001
         weight: 1
-      - path: Bone001/Bone002/Bone003/Bone004
+      - path: Bone003/Bone004
         weight: 1
-      - path: Bone001/Bone002/Bone003/Bone004/Bone005
+      - path: Bone003/Bone004/Bone005
         weight: 1
-      - path: Bone001/Bone002/Bone003/Bone004/Bone005/Bone006
+      - path: Bone003/Bone004/Bone005/Bone006
         weight: 1
       - path: Bone007
         weight: 1
@@ -117,48 +141,54 @@ ModelImporter:
         weight: 1
       - path: Bone007/Bone008/Bone009
         weight: 1
-      - path: Bone007/Bone008/Bone009/Bone010
+      - path: Bone010
         weight: 1
-      - path: Bone011
+      - path: Bone010/Bone011
         weight: 1
-      - path: Bone011/Bone012
+      - path: Bone010/Bone011/Bone012
         weight: 1
-      - path: Bone011/Bone012/Bone013
+      - path: Bone013
         weight: 1
-      - path: Bone011/Bone012/Bone013/Bone014
+      - path: Bone013/Bone014
         weight: 1
-      - path: Bone015
+      - path: Bone013/Bone014/Bone015
         weight: 1
-      - path: Bone015/Bone016
+      - path: Bone016
         weight: 1
-      - path: Bone015/Bone016/Bone017
+      - path: Bone016/Bone017
         weight: 1
-      - path: Bone015/Bone016/Bone017/Bone018
+      - path: Bone016/Bone017/Bone018
         weight: 1
-      - path: Bone019
+      - path: BoneDog
         weight: 1
-      - path: Bone019/Bone020
+      - path: High Poly
         weight: 1
-      - path: Bone019/Bone020/Bone021
+      - path: Low Poly
         weight: 1
-      - path: Bone019/Bone020/Bone021/Bone022
+      - path: old attempt
         weight: 1
-      - path: Cybergirl
+      - path: old attempt/Cylinder002
+        weight: 1
+      - path: old attempt/Head
+        weight: 1
+      - path: old attempt/Leg
+        weight: 1
+      - path: old attempt/Leg001
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
     - serializedVersion: 16
       name: Moving
       takeName: Take 001
-      firstFrame: 101
-      lastFrame: 180
-      wrapMode: 4
+      firstFrame: 31
+      lastFrame: 80
+      wrapMode: 2
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
-      loopTime: 1
-      loopBlend: 1
+      loopTime: 0
+      loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -173,17 +203,17 @@ ModelImporter:
       transformMask:
       - path: 
         weight: 1
-      - path: Bone001
+      - path: Bone003
         weight: 1
-      - path: Bone001/Bone002
+      - path: Bone003/Bone002
         weight: 1
-      - path: Bone001/Bone002/Bone003
+      - path: Bone003/Bone002/Bone001
         weight: 1
-      - path: Bone001/Bone002/Bone003/Bone004
+      - path: Bone003/Bone004
         weight: 1
-      - path: Bone001/Bone002/Bone003/Bone004/Bone005
+      - path: Bone003/Bone004/Bone005
         weight: 1
-      - path: Bone001/Bone002/Bone003/Bone004/Bone005/Bone006
+      - path: Bone003/Bone004/Bone005/Bone006
         weight: 1
       - path: Bone007
         weight: 1
@@ -191,33 +221,39 @@ ModelImporter:
         weight: 1
       - path: Bone007/Bone008/Bone009
         weight: 1
-      - path: Bone007/Bone008/Bone009/Bone010
+      - path: Bone010
         weight: 1
-      - path: Bone011
+      - path: Bone010/Bone011
         weight: 1
-      - path: Bone011/Bone012
+      - path: Bone010/Bone011/Bone012
         weight: 1
-      - path: Bone011/Bone012/Bone013
+      - path: Bone013
         weight: 1
-      - path: Bone011/Bone012/Bone013/Bone014
+      - path: Bone013/Bone014
         weight: 1
-      - path: Bone015
+      - path: Bone013/Bone014/Bone015
         weight: 1
-      - path: Bone015/Bone016
+      - path: Bone016
         weight: 1
-      - path: Bone015/Bone016/Bone017
+      - path: Bone016/Bone017
         weight: 1
-      - path: Bone015/Bone016/Bone017/Bone018
+      - path: Bone016/Bone017/Bone018
         weight: 1
-      - path: Bone019
+      - path: BoneDog
         weight: 1
-      - path: Bone019/Bone020
+      - path: High Poly
         weight: 1
-      - path: Bone019/Bone020/Bone021
+      - path: Low Poly
         weight: 1
-      - path: Bone019/Bone020/Bone021/Bone022
+      - path: old attempt
         weight: 1
-      - path: Cybergirl
+      - path: old attempt/Cylinder002
+        weight: 1
+      - path: old attempt/Head
+        weight: 1
+      - path: old attempt/Leg
+        weight: 1
+      - path: old attempt/Leg001
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}

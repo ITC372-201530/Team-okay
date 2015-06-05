@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d7d1c96c5c7159b4899104e98b92aa5b
+guid: a1c8caf6b0be4714591a3da8941c48ac
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -83,8 +83,8 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
-      loopTime: 1
-      loopBlend: 1
+      loopTime: 0
+      loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -151,14 +151,14 @@ ModelImporter:
       name: Moving
       takeName: Take 001
       firstFrame: 101
-      lastFrame: 180
+      lastFrame: 180.000015
       wrapMode: 4
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
-      loopTime: 1
-      loopBlend: 1
+      loopTime: 0
+      loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0

@@ -213,7 +213,8 @@ public class MasterCubeGrid : MonoBehaviour
 		float inputV = Input.GetAxisRaw("Vertical");
 		bool space = Input.GetButton ("Jump");
 
-		if (space) {
+		if (space && !inputted) {
+			inputted = true;
 			switch (player.checkAbilityLevel()){
 			case 0:
 			default:
@@ -244,7 +245,7 @@ public class MasterCubeGrid : MonoBehaviour
 		}
 		if(inputted)
 		{
-			if(inputH==0&&inputV==0)
+			if(inputH==0&&inputV==0&&!space)
 			{
 				inputted = false;
 			}

@@ -13,7 +13,7 @@ public class Ability {
 	}
 
 	static public void levelTwoAbility(PlayerController player){
-		player.freeCombo = 4;
+		player.addFreeCombo(4);
 		player.subtractPowers();
 	}
 

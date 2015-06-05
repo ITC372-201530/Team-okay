@@ -8,7 +8,8 @@ public class PlayerController : MonoBehaviour
 	private int playerX, playerZ;
 	public int powerLimit;
 	public int freeCombo;
-	public Animation modelAnimation;
+	public Animation playerModel, dogModel;
+	private Renderer playerRend, dogRend;
 	private int lastPowerSoundPlayed;
 
 	/*
@@ -27,6 +28,13 @@ public class PlayerController : MonoBehaviour
 	public AudioClip chainBreak, move1, move2, move3, move4, move5, abilityOneReady, abilityTwoReady, abilityThreeReady;
 	public AudioSource abilityAudioSource;
 
+
+	public void addFreeCombo(int fc)
+	{
+		freeCombo = fc;
+		dogRend.enabled = true;
+		playerRend.enabled = false;
+	}
 
 	public int checkAbilityLevel(){
 		int level = 0;
@@ -56,8 +64,15 @@ public class PlayerController : MonoBehaviour
 		height = transform.position.y;
 		//transform.position = new Vector3(playerX,height,playerZ);
 		audioSource = GetComponent<AudioSource>();
+
+		playerRend = playerModel.GetComponentsInChildren<Renderer>()[0];
+		dogRend = dogModel.GetComponentsInChildren<Renderer>()[0];
+
+		dogRend.enabled = false;
+		playerRend.enabled = true;
+
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
@@ -77,11 +92,15 @@ public class PlayerController : MonoBehaviour
 			}
 			transform.position += (positionDiff) * Time.deltaTime * 2;
 			transform.rotation = Quaternion.LookRotation (positionDiff);
-			modelAnimation.Play("Jumping");
+
+			dogModel.Play("Moving");
+			playerModel.Play("Moving");
+
 		}
 		else
 		{
-			modelAnimation.Play("Idle");
+				dogModel.Play("Idle");
+				playerModel.Play("Idle");
 		}
 
 
@@ -92,6 +111,11 @@ public class PlayerController : MonoBehaviour
 		if (freeCombo > 0) {
 			freeCombo--;
 			lastColour = newC;
+			if(freeCombo == 0)
+			{
+				dogRend.enabled = false;
+				playerRend.enabled = true;
+			}
 		}
 		if(lastColour != null)
 		{
