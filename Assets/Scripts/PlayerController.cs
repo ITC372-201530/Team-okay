@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
 		 */
 		Vector3 positionDiff = new Vector3(playerX,height,playerZ) - transform.position;
 		float mag = positionDiff.magnitude;
-		if(positionDiff.magnitude > Time.deltaTime)
+		if(positionDiff.magnitude > .1f)
 		{
 			if(mag < 1)
 			{

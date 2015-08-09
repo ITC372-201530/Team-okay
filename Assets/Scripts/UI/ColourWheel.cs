@@ -12,7 +12,7 @@ public class ColourWheel : Graphic
 	public float padding;
 	public float spd;
 
-	
+	public float zRot = 0f;
 	
 	void Start()
 	{
@@ -42,9 +42,9 @@ public class ColourWheel : Graphic
 		}
 		//centerPivot = rectTransform.pivot;
 
-		centerPivot = new Vector2(0.5f,0.5f);
+		centerPivot = new Vector2(0.0f,0.5f);
 		padding = 0.01f;
-		rectTransform.localScale = new Vector3(0.9f,0.4f,1);
+		rectTransform.localScale = new Vector3(1f,1f,1f);
 		rectTransform.offsetMax = Vector2.zero;
 		rectTransform.offsetMin = Vector2.zero;
 	}
@@ -52,7 +52,7 @@ public class ColourWheel : Graphic
 	void Update()
 	{
 		Vector3 intendedPosition = getIntendedPosition();
-
+		/*
 		Vector2 intendedPivot = new Vector2(intendedPosition.x,intendedPosition.y);
 		Vector2 pivotDiff = intendedPivot - rectTransform.pivot;
 
@@ -70,6 +70,9 @@ public class ColourWheel : Graphic
 //			rectTransform.anchoredPosition3D += new Vector3(0,0,zDiff*Time.deltaTime);
 //		}
 		rectTransform.anchoredPosition3D = new Vector3(0,0,intendedZ);
+		//zRot += Time.deltaTime*5;
+		*/
+		rectTransform.localRotation = Quaternion.Euler(0,0,zRot);
 	}
 
 	
@@ -99,29 +102,41 @@ public class ColourWheel : Graphic
 		{
 		default:
 		case 0:
+			//Same Colour
 			intPos = centerPivot;
 			intZ = -25;
+			zRot = 0;
 			break;
 		case 1:
+			//Above Friendly
 			intPos = centerPivot - new Vector2(0,rectTransform.localScale.y+padding);
 			intZ = -15;
+			zRot = 60;
 			break;
 		case 5:
+			//Below
 			intPos = centerPivot + new Vector2(0,rectTransform.localScale.y+padding);
 			intZ = -5;
+			zRot = 300;
 			break;
 
 		case 2:
+			//Above Enemy
 			intPos = centerPivot + new Vector2(-10,-(rectTransform.localScale.y+padding)*4);
 			intZ = 200;
+			zRot = 120;
 			break;
 		case 3:
+			//Opposite
 			intPos = centerPivot + new Vector2(-15,-(rectTransform.localScale.y+padding)*2);
 			intZ = 400;
+			zRot = 180;
 			break;
 		case 4:
+			//Below Enemy
 			intPos = centerPivot + new Vector2(-10,0);
 			intZ = 300;
+			zRot = 240;
 			break;
 		}
 
@@ -152,11 +167,11 @@ public class ColourWheel : Graphic
 
 		UIVertex vert = UIVertex.simpleVert;
 		
-		vert.position = new Vector2(corner1.x, corner1.y);
+		vert.position = new Vector2(corner1.x, (corner1.y+corner2.y)/2);
 		vert.color = color;
 		vbo.Add(vert);
 		
-		vert.position = new Vector2(corner1.x, corner2.y);
+		vert.position = new Vector2(corner1.x, (corner1.y+corner2.y)/2);
 		vert.color = color;
 		vbo.Add(vert);
 		
