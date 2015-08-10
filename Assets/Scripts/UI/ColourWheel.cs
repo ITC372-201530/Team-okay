@@ -11,7 +11,7 @@ public class ColourWheel : Graphic
 	private Vector2 centerPivot;
 	public float padding;
 	public float spd;
-
+	public float adj = 1f;
 	public float zRot = 0f;
 	public string debug;
 	
@@ -162,9 +162,9 @@ public class ColourWheel : Graphic
 		Vector2 corner2 = Vector2.zero;
 		
 		corner1.x = 0f;
-		corner1.y = -0.0f;
-		corner2.x = 1f;
-		corner2.y = 1f;
+		corner1.y = 0f-adj;
+		corner2.x = .866f;
+		corner2.y = 1f+adj;
 		
 		corner1.x -= rectTransform.pivot.x;
 		corner1.y -= rectTransform.pivot.y;
