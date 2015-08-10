@@ -13,6 +13,7 @@ public class ColourWheel : Graphic
 	public float spd;
 
 	public float zRot = 0f;
+	public string debug;
 	
 	void Start()
 	{
@@ -43,6 +44,7 @@ public class ColourWheel : Graphic
 		//centerPivot = rectTransform.pivot;
 
 		centerPivot = new Vector2(0.0f,0.5f);
+		rectTransform.pivot = centerPivot;
 		padding = 0.01f;
 		rectTransform.localScale = new Vector3(1f,1f,1f);
 		rectTransform.offsetMax = Vector2.zero;
@@ -51,7 +53,30 @@ public class ColourWheel : Graphic
 	
 	void Update()
 	{
-		Vector3 intendedPosition = getIntendedPosition();
+		//Vector3 intendedPosition = getIntendedPosition();
+
+		float toZRot = getIntendedPosition();
+		float currZRot = rectTransform.localRotation.eulerAngles.z;
+		float zDiff = toZRot - currZRot;
+		if(zDiff < -180)
+		{
+			zDiff+=360;
+		}
+		if(zDiff > 180)
+		{
+			zDiff-=360;
+		}
+		debug = "";
+		debug += zDiff;
+		/*
+		 * 0 - 60 = -60
+		 * 300 - 0 = - 60
+		 */
+		float t = Time.deltaTime*spd;	
+		if(Mathf.Abs (zDiff)>t)
+		{
+			rectTransform.localRotation = Quaternion.Euler(0,0,zDiff*t+currZRot);
+		}
 		/*
 		Vector2 intendedPivot = new Vector2(intendedPosition.x,intendedPosition.y);
 		Vector2 pivotDiff = intendedPivot - rectTransform.pivot;
@@ -71,20 +96,21 @@ public class ColourWheel : Graphic
 //		}
 		rectTransform.anchoredPosition3D = new Vector3(0,0,intendedZ);
 		//zRot += Time.deltaTime*5;
-		*/
+
 		rectTransform.localRotation = Quaternion.Euler(0,0,zRot);
+		float zzz = rectTransform.localRotation.eulerAngles.z;
+		*/
 	}
 
 	
-	private Vector3 getIntendedPosition()
+	private float getIntendedPosition()
 	{
 		char c = player.lastColour;
 		if(player.lastColour == null)
 		{
-			return Vector3.one;
+			return 0f;
 		}
-		Vector2 intPos = Vector2.one;
-		float intZ = 0;
+		float rot = 0;
 		char[] cs = ColourCube.colourChars;
 
 
@@ -103,44 +129,31 @@ public class ColourWheel : Graphic
 		default:
 		case 0:
 			//Same Colour
-			intPos = centerPivot;
-			intZ = -25;
-			zRot = 0;
+			rot = 0;
 			break;
 		case 1:
 			//Above Friendly
-			intPos = centerPivot - new Vector2(0,rectTransform.localScale.y+padding);
-			intZ = -15;
-			zRot = 60;
+			rot = 60;
 			break;
 		case 5:
 			//Below
-			intPos = centerPivot + new Vector2(0,rectTransform.localScale.y+padding);
-			intZ = -5;
-			zRot = 300;
+			rot = 300;
 			break;
-
 		case 2:
 			//Above Enemy
-			intPos = centerPivot + new Vector2(-10,-(rectTransform.localScale.y+padding)*4);
-			intZ = 200;
-			zRot = 120;
+			rot = 120;
 			break;
 		case 3:
 			//Opposite
-			intPos = centerPivot + new Vector2(-15,-(rectTransform.localScale.y+padding)*2);
-			intZ = 400;
-			zRot = 180;
+			rot = 180;
 			break;
 		case 4:
 			//Below Enemy
-			intPos = centerPivot + new Vector2(-10,0);
-			intZ = 300;
-			zRot = 240;
+			rot = 240;
 			break;
 		}
 
-		return new Vector3(intPos.x,intPos.y,intZ);
+		return rot;
 	}
 
 	protected override void OnFillVBO (List<UIVertex> vbo)
@@ -149,7 +162,7 @@ public class ColourWheel : Graphic
 		Vector2 corner2 = Vector2.zero;
 		
 		corner1.x = 0f;
-		corner1.y = 0f;
+		corner1.y = -0.0f;
 		corner2.x = 1f;
 		corner2.y = 1f;
 		
@@ -162,23 +175,26 @@ public class ColourWheel : Graphic
 		corner1.y *= rectTransform.rect.height;
 		corner2.x *= rectTransform.rect.width;
 		corner2.y *= rectTransform.rect.height;
-		
+
+		float centerY = (corner1.y+corner2.y)/2;
+		float farX = corner2.x * 1.1443375673f;
+
 		vbo.Clear();
 
 		UIVertex vert = UIVertex.simpleVert;
 		
-		vert.position = new Vector2(corner1.x, (corner1.y+corner2.y)/2);
-		vert.color = color;
-		vbo.Add(vert);
-		
-		vert.position = new Vector2(corner1.x, (corner1.y+corner2.y)/2);
+		vert.position = new Vector2(corner1.x, centerY);
 		vert.color = color;
 		vbo.Add(vert);
 		
 		vert.position = new Vector2(corner2.x, corner2.y);
 		vert.color = color;
 		vbo.Add(vert);
-		
+
+		vert.position = new Vector2(farX, centerY);
+		vert.color = color;
+		vbo.Add(vert);
+
 		vert.position = new Vector2(corner2.x, corner1.y);
 		vert.color = color;
 		vbo.Add(vert);

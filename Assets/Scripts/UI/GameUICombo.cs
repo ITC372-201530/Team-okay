@@ -6,20 +6,22 @@ public class GameUICombo : MonoBehaviour {
 	
 	public PlayerController player;
 	Text txt;
-	
+	string format;
+
 	void Start()
 	{
 		txt = GetComponent<Text>();
+		format = txt.text;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		string display ="COMBO\n";
+		string display ="";
 		
-		
-		display+= player.chain.ToString("0.00");
-		display+='\n';
-
+		if(player.chain != 0)
+		{
+			display+= player.chain.ToString(format);
+		}
 		txt.text = display;
 	}
 	
