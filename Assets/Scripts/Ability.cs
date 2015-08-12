@@ -18,7 +18,7 @@ public class Ability {
 	}
 
 	static public void levelThreeAbility(MasterCubeGrid mcg, PlayerController player) {
-		mcg.scoreMultiplier *= 1.3;
+		mcg.scoreMultiplier *= 1.3f;
 		player.subtractPowers();
 	}
 }

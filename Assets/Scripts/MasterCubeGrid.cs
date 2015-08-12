@@ -28,8 +28,8 @@ public class MasterCubeGrid : MonoBehaviour
 
 	bool inputted = false;
 
-	public double score;
-	public double scoreMultiplier;
+	public float score;
+	public float scoreMultiplier;
 	
 	private AudioSource audioSource;
 	public AudioClip darkenSound, abilityOneUse, abilityOneDeny,
@@ -142,7 +142,7 @@ public class MasterCubeGrid : MonoBehaviour
 				darken ();
 				darknessCounter += 1000;
 			}
-			PlayerPrefs.SetString("PScore", (score/10).ToString("0.00") );
+            PlayerPrefs.SetFloat("PScore", (score / 10));
 			score += 10 * scoreMultiplier;
 
 		}

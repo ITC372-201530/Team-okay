@@ -1,16 +1,29 @@
 ﻿using UnityEngine;
+using System;
+using System.Linq;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Score : MonoBehaviour {
 
 
-	private string score;
-	private string highscore;
+	private float score;
+	private float highscore;
+	private string scorename;
+	private string highscorename;
 	// Use this for initialization
 	void Start () {
 	
-		score = PlayerPrefs.GetString("PScore");
-		guiText.text = score;
+		score = PlayerPrefs.GetFloat("PScore");
+		highscorename = PlayerPrefs.GetString ("HScoreN");
+		highscore = PlayerPrefs.GetFloat ("HScore");
+		if(score > highscore)
+		{
+			PlayerPrefs.SetFloat("HScore", score);
+			//PlayerPrefs.SetFloat("HScoreN", highscorename);
+		}
+		guiText.text = score.ToString("0.00");
+
 
 
 	}
