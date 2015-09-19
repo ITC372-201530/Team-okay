@@ -13,3 +13,5 @@ EditorBuildSettings:
     path: Assets/_scenes/scene1.unity
   - enabled: 1
     path: Assets/_scenes/GameOver.unity
+  - enabled: 1
+    path: Assets/_scenes/Highscores.unity
