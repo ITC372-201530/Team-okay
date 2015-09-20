@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class MasterCubeGrid : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class MasterCubeGrid : MonoBehaviour
 	//	ColourCube component
 	public ColourCube prefab;
 	public PlayerController player;
+	public int tutorial;
 
 	public int darknessCounter;
 	public int darknessSpeed;
@@ -60,7 +62,9 @@ public class MasterCubeGrid : MonoBehaviour
 		scoreMultiplier = 1;
 
 		darknessCounter = 1000;
-		
+
+		tutorial = 1;
+
 		audioSource = GetComponent<AudioSource>();
 	}
 
@@ -104,11 +108,15 @@ public class MasterCubeGrid : MonoBehaviour
 
 	}
 
+
 	public void movePlayer(int newX, int newZ, bool trueMove)
 	{
 		darknessCounter -= darknessSpeed;
 		if (darknessSpeed <= 800) 
-			darknessSpeed+=3;
+			darknessSpeed += 3;
+		
+		if (tutorial < 4)
+			tutorial++;
 
 		/*
 		 * newX and newZ are where the player's new location is

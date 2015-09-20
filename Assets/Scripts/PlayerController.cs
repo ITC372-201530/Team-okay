@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
 	public int gPower;
 	public int bPower;
 
+	public int tutorial;
+
 	private AudioSource audioSource;
 	public AudioClip chainBreak, move1, move2, move3, move4, move5, abilityOneReady, abilityTwoReady, abilityThreeReady;
 	public AudioSource abilityAudioSource;
@@ -102,6 +104,8 @@ public class PlayerController : MonoBehaviour
 				dogModel.Play("Idle");
 				playerModel.Play("Idle");
 		}
+
+		tutorial = checkAbilityLevel() + 4;
 
 
 	}
