@@ -11,13 +11,8 @@ public class Score : MonoBehaviour {
 	private string highscorename0, highscorename1, highscorename2, highscorename3, highscorename4, highscorename5, highscorename6, highscorename7, highscorename8, highscorename9, highscorename10;
 	// Use this for initialization
 	void Start () {
-	
-		submit ("Samel");
 
 		guiText.text = highscore0.ToString("0.00");
-
-
-
 	}
 	
 	// Update is called once per frame
@@ -25,7 +20,7 @@ public class Score : MonoBehaviour {
 	
 	}
 
-	void submit (string name) {
+	public void submit (string name) {
 
 		highscore0 = PlayerPrefs.GetFloat("PScore");
 		highscore1 = PlayerPrefs.GetFloat ("highscore1");

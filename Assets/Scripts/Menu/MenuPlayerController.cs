@@ -103,6 +103,9 @@ public class MenuPlayerController : MonoBehaviour {
 					toY+=dir;
 					audioSource.Play();
 				}
+
+					
+
 			}
 		}
 
