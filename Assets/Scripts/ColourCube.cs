@@ -11,6 +11,7 @@ public class ColourCube : MonoBehaviour, IComparable<ColourCube> {
 	
 	private bool player;
 	private bool spawning;
+	private Boolean destructionTime = false;
 
 	private GameObject childCube;
 
@@ -61,6 +62,8 @@ public class ColourCube : MonoBehaviour, IComparable<ColourCube> {
 		else if (transform.position.y >= sizeY && !player) {
 			transform.position+= new Vector3(0,-(moveMag/4),0);
 		}
+		if(childCube!=null)
+		if (!childCube.animation.IsPlaying("Take 0010") && destructionTime == true) setColour('K');
 
 		//	shitty flicker code for black cubes
 		//	uses the "default" layer, same as player sphere
@@ -89,6 +92,16 @@ public class ColourCube : MonoBehaviour, IComparable<ColourCube> {
 		colour = colourChars [c];
 		changeColour ();
 	}
+
+	public void destroy()
+	{
+
+		childCube.animation.Play ("Take 0010");
+		destructionTime = true;
+		//if (!childCube.animation.IsPlaying("Take 0010")
+
+	}
+
 
 	public void setColour (char c)
 	{
@@ -122,6 +135,7 @@ public class ColourCube : MonoBehaviour, IComparable<ColourCube> {
 		GameObject cubeType;
 		RuntimeAnimatorController Rac;
 
+
 		switch (colour)
 		{
 		case 'R':
@@ -153,8 +167,9 @@ public class ColourCube : MonoBehaviour, IComparable<ColourCube> {
 		Animation anim = childCube.gameObject.GetComponent<Animation>();
 		//animator.runtimeAnimatorController = Rac;
 		foreach (AnimationState state in anim) {
-			state.speed = UnityEngine.Random.value / 4 + .75f;
+			state.speed = UnityEngine.Random.value / 3 + .75f;
 		}
+
 		//childCube.animation.Play("Create");
 
 	}

@@ -100,11 +100,17 @@ public class MasterCubeGrid : MonoBehaviour
 		player.transform.position += new Vector3(-1,0,0);
 		if(player.getH ()==0)
 		{
-
 			Application.LoadLevel("GameOver");
 		}
 		audioSource.clip = darkenSound;
 		audioSource.Play();
+
+	}
+
+	public void setBlack ()
+	{
+
+		cubes[player.getV ()][player.getH ()].setColour('K');
 
 	}
 
@@ -126,7 +132,10 @@ public class MasterCubeGrid : MonoBehaviour
 		 */
 		if(trueMove)
 		{
-			cubes[player.getV ()][player.getH ()].setColour('K');
+
+			cubes[player.getV ()][player.getH ()].destroy ();
+			//Invoke ("setBlack", 0.5f);
+
 		}
 
 		cubes[player.getV()][player.getH ()].setPlayer(false);
@@ -137,6 +146,7 @@ public class MasterCubeGrid : MonoBehaviour
 		if (trueMove) 
 		{
 			player.colourChain (cubes [player.getV ()] [player.getH ()].getColour ());
+
 
 			if (player.chain == 0)
 				darknessCounter -= 1000;
@@ -158,6 +168,7 @@ public class MasterCubeGrid : MonoBehaviour
 		{
 			addRow (true);
 		}
+	
 	}
 
 	void addRow(bool apartheid)
