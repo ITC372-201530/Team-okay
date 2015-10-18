@@ -31,16 +31,20 @@ public class Initials : FormChangeClick {
 		clamp ();
 	}
 
+	//where another cube in these menus would change scene,
+	// the initial cubes change the case of their character
 	public override void OnMouseDown () {
 		isUppercase = !isUppercase;
 	}
 
+	//adjusts the cube's character based on input direction
 	public override void changeChar(int direction)
 	{
 		charId += direction;
 		clamp ();
 	}
 
+	//returns character that cube represents
 	public char getChar()
 	{
 		if(charId == -1)
@@ -50,7 +54,8 @@ public class Initials : FormChangeClick {
 		int cId = charId + 65 + (isUppercase ? 0 : 32);
 		return (char)cId;
 	}
-	
+
+	//loops character selected
 	private void clamp()
 	{
 		if(charId < -1)

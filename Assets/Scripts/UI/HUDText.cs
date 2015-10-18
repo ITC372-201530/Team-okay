@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//displays a list of game state
+// used for debugging
 public class HUDText : MonoBehaviour {
 
 	public PlayerController player;

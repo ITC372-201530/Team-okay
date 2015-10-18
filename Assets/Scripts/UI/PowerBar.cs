@@ -11,21 +11,20 @@ public class PowerBar : Graphic
 	public int bar;
 	public float length;
 
-
-	void Start()
-	{
-	}
-
 	void LateUpdate()
 	{
 		rectTransform.localScale = new Vector3(pbp.getLength(bar),rectTransform.localScale.y,1f);
+		//get the intended colour based on player resources
 		Color c = pbp.getColour(bar);
+
+		//if there is no glow (power bar is not full)
 		if(!pbp.isGlow(bar))
 		{
 			color = c;
 		}
 		else
 		{
+			//apply amount of glow
 			float glow = pbp.getGlow();
 			float[] v3 = new float[3];
 			v3[0] = (1-c.r)*glow + c.r;

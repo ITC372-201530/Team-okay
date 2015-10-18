@@ -3,41 +3,55 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour 
 {
-
+	//height is inhereted from initial game state y axis
 	private float height;
+	//playerX and playerZ representing the coordinates that
+	// the player model is moving toward
 	private int playerX, playerZ;
+	//the maximum of each power bar
 	public int powerLimit;
+	//the current number of moves that can be made
+	// with a guaranteed combo
 	public int freeCombo;
-	public Animation playerModel, dogModel;
-	private Renderer playerRend, dogRend;
+	//the two models that are used to display the player
+	public GameObject playerStandardModel, playerFreeComboModel;
+	//used to check if a new power bar is filled each move
 	private int lastPowerSoundPlayed;
-
-	/*
-	 * to whoever does colour chains:
-	 * 	if you want, this var can be an int,
-	 * 	and you can make use of ColourCube.colourChars
-	 * 	to perhaps make the arithmetic easier.
-	 */
+	//the colour that was last moved to
 	public char lastColour;
+	//COMBO counter
 	public int chain = 0;
+	//power resource bars
 	public int rPower;
 	public int gPower;
 	public int bPower;
 
+	//the second part of the tutorial
 	public int tutorial;
 
+	//audio parts
 	private AudioSource audioSource;
 	public AudioClip chainBreak, move1, move2, move3, move4, move5, abilityOneReady, abilityTwoReady, abilityThreeReady;
 	public AudioSource abilityAudioSource;
 
+	// Use this for initialization
+	void Start () 
+	{
+		height = transform.position.y;
+		audioSource = GetComponent<AudioSource>();
+		playerFreeComboModel.SetActive( false);
+		playerStandardModel.SetActive( true);
+	}
 
 	public void addFreeCombo(int fc)
 	{
 		freeCombo = fc;
-		dogRend.enabled = true;
-		playerRend.enabled = false;
+		//display the free combo model
+		playerFreeComboModel.SetActive( true);
+		playerStandardModel.SetActive( false);
 	}
 
+	//returns an int of how many power bars are full
 	public int checkAbilityLevel(){
 		int level = 0;
 		if (rPower == powerLimit)
@@ -49,6 +63,7 @@ public class PlayerController : MonoBehaviour
 		return level;
 	}
 
+	//sets all full power bars to 0
 	public void subtractPowers()
 	{
 		if (rPower == powerLimit)
@@ -60,71 +75,52 @@ public class PlayerController : MonoBehaviour
 		lastPowerSoundPlayed = 0;
 	}
 
-	// Use this for initialization
-	void Start () 
-	{
-		height = transform.position.y;
-		//transform.position = new Vector3(playerX,height,playerZ);
-		audioSource = GetComponent<AudioSource>();
-
-		playerRend = playerModel.GetComponentsInChildren<Renderer>()[0];
-		dogRend = dogModel.GetComponentsInChildren<Renderer>()[0];
-
-		dogRend.enabled = false;
-		playerRend.enabled = true;
-
-	}
-
 	// Update is called once per frame
 	void Update ()
 	{
-		/*
-		 * Because the PlayerController class does not hold
-		 * 	the player's location on the grid, this class is
-		 * 	doing little more than displaying that position
-		 * 	(right now, maybe ability resources are here too)
-		 */
+		//the difference between the current position and the destination
 		Vector3 positionDiff = new Vector3(playerX,height,playerZ) - transform.position;
+		//how big is the difference
 		float mag = positionDiff.magnitude;
+
 		if(positionDiff.magnitude > .1f)
 		{
 			if(mag < 1)
 			{
+				//cap the speed of the player model
+				// at 1 unit/second
 				positionDiff = positionDiff.normalized;
 			}
+			//move the player an amount based on the distance from
+			// the destination
 			transform.position += (positionDiff) * Time.deltaTime * 2;
-			transform.rotation = Quaternion.LookRotation (positionDiff);
-
-			dogModel.Play("Moving");
-			playerModel.Play("Moving");
-
-		}
-		else
-		{
-				dogModel.Play("Idle");
-				playerModel.Play("Idle");
 		}
 
 		tutorial = checkAbilityLevel() + 4;
-
-
 	}
 
+	//check for combos, and increase ability powers
 	public void colourChain( char newC )
 	{
+		//freeCombo gives free combos
 		if (freeCombo > 0) {
 			freeCombo--;
+			//pretend the previous colour was the same
+			// as the new colour
 			lastColour = newC;
+			//if we ran out of free combo, switch models
 			if(freeCombo == 0)
 			{
-				dogRend.enabled = false;
-				playerRend.enabled = true;
+				playerFreeComboModel.SetActive( false);
+				playerStandardModel.SetActive( true);
 			}
 		}
+
 		if(lastColour != null)
 		{
 			switch(newC)
 			{
+				//Red combos with Red, Magenta and Yellow
 			case 'R':
 				if(lastColour == 'R' || lastColour == 'M' || lastColour == 'Y')
 				{
@@ -136,6 +132,7 @@ public class PlayerController : MonoBehaviour
 					chain=0;
 				}
 				break;
+				//Green combos with Green, Cyan and Yellow
 			case 'G':
 				if(lastColour == 'G' || lastColour == 'C' || lastColour == 'Y')
 				{
@@ -147,6 +144,7 @@ public class PlayerController : MonoBehaviour
 					chain=0;
 				}
 				break;
+				//Blue combos with Blue, Cyan and Magenta
 			case 'B':
 				if(lastColour == 'B' || lastColour == 'C' || lastColour == 'M')
 				{
@@ -158,6 +156,7 @@ public class PlayerController : MonoBehaviour
 					chain=0;
 				}
 				break;
+				//Cyan combos with Cyan, Blue and Green
 			case 'C':
 				if(lastColour == 'C' || lastColour == 'B' || lastColour == 'G')
 				{
@@ -170,6 +169,7 @@ public class PlayerController : MonoBehaviour
 					chain=0;
 				}
 				break;
+				//Magenta combos with Magenta, Blue and Red
 			case 'M':
 				if(lastColour == 'M' || lastColour == 'B' || lastColour == 'R')
 				{
@@ -182,6 +182,7 @@ public class PlayerController : MonoBehaviour
 					chain=0;
 				}
 				break;
+				//Yellow combos with Yellow, Red and Green
 			case 'Y':
 				if(lastColour == 'Y' || lastColour == 'R' || lastColour == 'G')
 				{
@@ -194,6 +195,7 @@ public class PlayerController : MonoBehaviour
 					chain=0;
 				}
 				break;
+				//Black don' combo wit' nuffin
 			case 'K':
 			{
 				Application.LoadLevel ("GameOver");
@@ -201,21 +203,21 @@ public class PlayerController : MonoBehaviour
 				break;
 
 			}
-
-			//chain that shit
 		}
+		//cap power amounts
 		if (rPower > powerLimit) 
 			rPower = powerLimit;
 		if (gPower > powerLimit) 
 			gPower = powerLimit;
 		if (bPower > powerLimit) 
 			bPower = powerLimit;
+		//cap combo counter
 		if(chain>10)
 			chain = 10;
-
-
+		//record new colour
 		lastColour = newC;
 
+		//play appropriate sound
 		if(chain == 0)
 		{
 			audioSource.clip = chainBreak;
@@ -242,6 +244,8 @@ public class PlayerController : MonoBehaviour
 		}
 		audioSource.Play();
 
+		//if there is an ability resource full
+		// that hadn't been before, play a sound for it
 		if(lastPowerSoundPlayed < checkAbilityLevel())
 		{
 			switch(checkAbilityLevel())
@@ -262,23 +266,25 @@ public class PlayerController : MonoBehaviour
 
 	}
 
-	public int getH()
+	//V and H here are used instead of the axis names,
+	// to separate mechanical location from visual
+	public int getV()
 	{
 		return playerX;
 	}
 
-	public int getV()
+	public int getH()
 	{
 		return playerZ;
 	}
 
-	public void setH(int h)
-	{
-		playerX = h;
-	}
-
 	public void setV(int v)
 	{
-		playerZ = v;
+		playerX = v;
+	}
+
+	public void setH(int h)
+	{
+		playerZ = h;
 	}
 }

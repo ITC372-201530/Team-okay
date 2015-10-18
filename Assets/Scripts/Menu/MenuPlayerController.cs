@@ -3,16 +3,22 @@ using System.Collections;
 
 public class MenuPlayerController : MonoBehaviour {
 
+	//parent of clickable objects
 	public GameObject menuOptionsParent;
-	public Animation animation;
+	//list of clickable objects
 	private FormChangeClick[] menuOptions;
-	private int toX, toY;
+	//object destination and interaction location
+	public int toX, toY;
+	//is there an input currently pressed
 	bool inputted = false;
+
 	private AudioSource audioSource;
 
 	// Use this for initialization
 	void Start () {
+		//gathers list of clickable options
 		menuOptions = menuOptionsParent.GetComponentsInChildren<FormChangeClick>();
+
 		toX = (int)gameObject.transform.position.x;
 		toY = (int)gameObject.transform.position.z;
 
@@ -22,20 +28,18 @@ public class MenuPlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		checkInputs();
+
+		//move object towards destination
 		Transform t = gameObject.transform;
 		Vector3 difference = t.position - new Vector3(toX,t.position.y,toY);
 		if((difference.magnitude > .05f))
 		{
 			t.position -= difference.normalized * difference.magnitude * Time.deltaTime * 3;
-			animation.gameObject.transform.rotation = Quaternion.LookRotation (-difference);
-			animation.Play("Moving");
-		}
-		else
-		{
-			animation.Play("Idle");
 		}
 	}
 
+	//checks for a clickable option in list with
+	// given coordinates
 	private FormChangeClick findOption(int x, int y)
 	{
 		foreach (FormChangeClick fcc in menuOptions)
@@ -49,18 +53,20 @@ public class MenuPlayerController : MonoBehaviour {
 		return null;
 	}
 
+	//processes inputs
 	private void checkInputs()
 	{
-		float inputV = Input.GetAxisRaw("Horizontal");
-		float inputH = -Input.GetAxisRaw("Vertical");
-		bool space = Input.GetButton ("Jump");
+		//an axis is between -1.0f and 1.0f
+		float inputV = Input.GetAxisRaw("Vertical");
+		float inputH = Input.GetAxisRaw("Horizontal");
+		bool space = Input.GetButton ("Ability");
 		if (space && !inputted) {
 			inputted = true;
 			FormChangeClick option = findOption(toX,toY);
 			if(option!=null)
 			{
+				//simulates clicking on the selected option
 				option.OnMouseDown();
-				//option.position += new Vector3(0,1,0);
 			}
 		}
 		else if (inputH!=0 && !inputted)

@@ -5,7 +5,7 @@ public class GameOverPlayer : MonoBehaviour
 {
 	
 	public GameObject menuOptionsParent;
-	public Animation animation;
+	//public Animation animation;
 	private FormChangeClick[] menuOptions;
 	public int toX, toY;
 	bool inputted = false;
@@ -35,11 +35,11 @@ public class GameOverPlayer : MonoBehaviour
 		if ((difference.magnitude > .05f))
 		{
 			t.position -= difference.normalized * difference.magnitude * Time.deltaTime * 3;
-			animation.gameObject.transform.rotation = Quaternion.LookRotation (-difference);
-			animation.Play ("Moving");
+			//animation.gameObject.transform.rotation = Quaternion.LookRotation (-difference);
+			//animation.Play ("Moving");
 		} else
 		{
-			animation.Play ("Idle");
+			//animation.Play ("Idle");
 		}
 	}
 	
@@ -58,9 +58,10 @@ public class GameOverPlayer : MonoBehaviour
 	
 	private void checkInputs ()
 	{
-		float inputV = Input.GetAxisRaw ("Horizontal");
-		float inputH = -Input.GetAxisRaw ("Vertical");
-		bool space = Input.GetButton ("Jump");
+		//an axis is between -1.0f and 1.0f
+		float inputV = Input.GetAxisRaw("Vertical");
+		float inputH = Input.GetAxisRaw("Horizontal");
+		bool space = Input.GetButton ("Ability");
 		if (space && !inputted)
 		{
 			inputted = true;

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class BackgroundText : MonoBehaviour {
 
-	private List<string> words;
+	private List<string> lines;
 	public int maxLength;
 	public float active;
 	public int avgLineLength;
@@ -12,41 +12,26 @@ public class BackgroundText : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		words = new List<string>();
+		lines = new List<string>();
 		guiText.text = allStrings();
 		updateTime = 0f;
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-/*		int rng = (int)(Random.value*(maxLength*2/active));
-		if(words.Length >= maxLength) {
-			words = "";
-		}
-		if (!(rng > maxLength*2)) {
-			if (rng < words.Length) {
-				words = words.Substring (0, words.Length - 2);
-			}
-			else {
-				if (rng%avgLineLength == 0) {
-					words+='\n';
-				}
-				else {
-					words += (char)(rng%95+32);
-				}
-			}
-
-		}
-		*/
-		
+		//time to update
 		if(updateTime<=0f)
 		{
+			//update again in some time
 			updateTime += Random.value;
-			while(words.Count < maxLength)
+			//get the line count to its limit
+			while(lines.Count < maxLength)
 			{
-				words.Add(newString());
+				lines.Add(newString());
 			}
-			words.RemoveAt(0);
+			//then remove one, so next update adds one
+			lines.RemoveAt(0);
+			//display lines
 			guiText.text = allStrings();
 		}
 		updateTime-=Time.deltaTime;
@@ -55,7 +40,7 @@ public class BackgroundText : MonoBehaviour {
 	private string newString()
 	{
 		string newString = "";
-
+		//add random characters to line
 		int tabs = (int)(Mathf.Pow(Random.value,2)*3);
 		int lineLength = (int)((1-Mathf.Pow(Random.value,2))*(80-(tabs*5)));
 		for(int i = 0; i < tabs; i++)
@@ -73,7 +58,7 @@ public class BackgroundText : MonoBehaviour {
 	private string allStrings()
 	{
 		string allStrings = "";
-		foreach (string s in words)
+		foreach (string s in lines)
 		{
 			allStrings+=s;
 		}

@@ -6,17 +6,20 @@ using System.Collections.Generic;
 //[ExecuteInEditMode]
 public class ColourWheel : Graphic 
 {
+	//center colour
 	public int colour;
+	//player object to get colour from
 	public PlayerController player;
-	private Vector2 centerPivot;
-	public float padding;
+	//how many full rotations would happen in a second
+	// if the rotation difference was 360
 	public float spd;
+	//
 	public float adj = 1f;
 	public float zRot = 0f;
-	public string debug;
 	
 	void Start()
 	{
+		//hell yeah hard coding colours
 		switch(colour)
 		{
 		case 1:	//Red
@@ -41,11 +44,7 @@ public class ColourWheel : Graphic
 			color = new Color(.7f,.7f,.7f);
 			break;
 		}
-		//centerPivot = rectTransform.pivot;
 
-		centerPivot = new Vector2(0.0f,0.5f);
-		rectTransform.pivot = centerPivot;
-		padding = 0.01f;
 		rectTransform.localScale = new Vector3(1f,1f,1f);
 		rectTransform.offsetMax = Vector2.zero;
 		rectTransform.offsetMin = Vector2.zero;
@@ -53,8 +52,7 @@ public class ColourWheel : Graphic
 	
 	void Update()
 	{
-		//Vector3 intendedPosition = getIntendedPosition();
-
+		//rotate towards intended position
 		float toZRot = getIntendedPosition();
 		float currZRot = rectTransform.localRotation.eulerAngles.z;
 		float zDiff = toZRot - currZRot;
@@ -66,40 +64,13 @@ public class ColourWheel : Graphic
 		{
 			zDiff-=360;
 		}
-		debug = "";
-		debug += zDiff;
-		/*
-		 * 0 - 60 = -60
-		 * 300 - 0 = - 60
-		 */
+
 		float t = Time.deltaTime*spd;	
 		if(Mathf.Abs (zDiff)>t)
 		{
 			rectTransform.localRotation = Quaternion.Euler(0,0,zDiff*t+currZRot);
 		}
-		/*
-		Vector2 intendedPivot = new Vector2(intendedPosition.x,intendedPosition.y);
-		Vector2 pivotDiff = intendedPivot - rectTransform.pivot;
 
-		float t = Time.deltaTime*spd;
-
-		if(pivotDiff.magnitude>t)
-		{
-			rectTransform.pivot += (pivotDiff*t);
-		}
-
-		float intendedZ  = intendedPosition.z;
-//		float zDiff = intendedZ - rectTransform.anchoredPosition3D.z;
-//		if(zDiff > Time.deltaTime)
-//		{
-//			rectTransform.anchoredPosition3D += new Vector3(0,0,zDiff*Time.deltaTime);
-//		}
-		rectTransform.anchoredPosition3D = new Vector3(0,0,intendedZ);
-		//zRot += Time.deltaTime*5;
-
-		rectTransform.localRotation = Quaternion.Euler(0,0,zRot);
-		float zzz = rectTransform.localRotation.eulerAngles.z;
-		*/
 	}
 
 	
@@ -124,6 +95,7 @@ public class ColourWheel : Graphic
 		}
 		if(place==0)
 		rectTransform.SetAsLastSibling();
+		//rotation representing colour wheel position
 		switch(place)
 		{
 		default:

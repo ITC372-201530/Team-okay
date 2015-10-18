@@ -5,6 +5,7 @@ using System.Collections;
 public class InitialsText : MonoBehaviour {
 
 	private Text txt;
+	//the cube object that contains character to display
 	public Initials source; 
 
 	// Use this for initialization
@@ -15,6 +16,7 @@ public class InitialsText : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		string display ="";
+		//get cube's character
 		display+= source.getChar();
 
 		txt.text = display;

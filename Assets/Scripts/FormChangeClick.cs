@@ -2,19 +2,28 @@
 using System.Collections;
 
 public class FormChangeClick : MonoBehaviour {
+	//The scene to change to when this object is interacted with
 	public string level;
 
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
 	public virtual void OnMouseDown () {
-		if (level == "quit")
+		//OnMouseDown is called when this object's collider is clicked on
+		if (level == "")
+		{
+			//some cubes have no attached level
+			return;
+		}
+		else if (level == "quit")
+		{
+			//Quit the game
 			Application.Quit ();
+		}
 		else 
-		Application.LoadLevel (level);
+		{
+			//Change the game to be the scene of the same name as the level string
+			Application.LoadLevel (level);
+		}
 	}
 
+	//Used in subclass Initials
 	public virtual void changeChar(int direction) {}
 }

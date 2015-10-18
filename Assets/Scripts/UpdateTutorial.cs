@@ -7,32 +7,27 @@ public class UpdateTutorial : MonoBehaviour {
 	public MasterCubeGrid grid;
 	public PlayerController player;
 
+	//the current 'page' of the tutorial
 	public int tutorialPart = 1;
-
-	// Use this for initialization
-	void Start () {
-
-
-	}
-
 
 	// Update is called once per frame
 	void Update () {
 
 		string display = null;
-		
 		Text displayText = null;
 
-
+		//early tutorial pages are based on the state of the grid
 		if (tutorialPart < 4) {
 			tutorialPart = grid.tutorial;
 		}
+		//later is based on the player resources
 		else {
 			tutorialPart = player.tutorial;
 			if (tutorialPart == 4)
 				tutorialPart = 8;
 		}
 
+		//write appropriate tutorial string
 		switch (tutorialPart) {
 		case 1:
 			display = "Move around with WASD";
@@ -62,9 +57,8 @@ public class UpdateTutorial : MonoBehaviour {
 			break;
 		}
 
-		
+		//display string
 		displayText = GetComponent<Text>();
-		
 		displayText.text = ""+display;
 	}
 }

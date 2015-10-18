@@ -2,19 +2,30 @@
 using System.Collections;
 using System;
 
+//This class represents one cube of a colour in the active game world
 public class ColourCube : MonoBehaviour, IComparable<ColourCube> {
-
-	public char colour = 'M';
+	//This array is used to convert between ints and chars for colour representation
 	public static char[] colourChars = {'R','Y','G','C','B','M','K'};
+
+	//These values make the array of cubes sortable, so their location in game
+	// becomes predictable (they are stored in an ordered list, but this guarantees
+	// newer cubes being at the end of the list)
 	static int cubeCount = 0;
 	private int zDepth;
-	
-	private bool player;
-	private bool spawning;
-	private Boolean destructionTime = false;
 
+	//This indicates which model to display and is used by the player
+	// when they move to it to determine combo chain and power resources
+	public char colour = 'M';
+
+	//Indicates whether the player is on top of this cube
+	private bool player;
+	//Set to true if the cube is despawning
+	private Boolean despawning = false;
+
+	//The model of a cube, based on which colour this class is
 	private GameObject childCube;
 
+	//Models of appropriate colour, to be created when the colour is set
 	public GameObject red;
 	public GameObject green;
 	public GameObject blue;
@@ -24,15 +35,17 @@ public class ColourCube : MonoBehaviour, IComparable<ColourCube> {
 
 	// Use this for initialization
 	void Start () {
-		//	spawning indicates whether or not the cube is rising
-		spawning = true;
-		//	this is the initial height that the cube rises from
-		transform.position += new Vector3(0,-1,0);
-		//	changes the cube to display its colour
-		//		(probably always magenta initially)
+
+		//this is the initial height (y-axis) of the cube
+		// height is the only position value that should be controlled in this class
+		transform.position += new Vector3(0,-transform.localScale.y,0);
+
+		//changes the cube to display its colour
+		// (probably always magenta initially)
 		changeColour ();
-		//	each cube stores in what order it was created,
-		//		so they may be sorted
+
+		//each cube stores in what order it was created,
+		// so they may be sorted
 		zDepth = cubeCount;
 		cubeCount++;
 	}
@@ -40,101 +53,81 @@ public class ColourCube : MonoBehaviour, IComparable<ColourCube> {
 	// Update is called once per frame
 	void Update () {
 
-
 		float sizeY = -transform.localScale.y;
+		//how much the cube moves is dependant on how long the
+		// most recent update took
 		float moveMag = 1f * Time.deltaTime;
 
-		//	the cube rises!
-		if (transform.position.y < sizeY && spawning)
+		//correct Y based on presence or absence of player
+		if (transform.position.y <= (sizeY/2) && player)
 		{
-			transform.position += new Vector3 (0, (moveMag), 0);
-		}
-		else
-		{
-			//	if the resting height has been reached,
-			//		there will be no more rising
-			spawning = false;
-		}
-		//	correct Y based on presence or absence of player
-		if (transform.position.y <= (sizeY/2) && player) {
 			transform.position+= new Vector3(0,(moveMag/2),0);
 		}
-		else if (transform.position.y >= sizeY && !player) {
+		else if (transform.position.y >= sizeY && !player)
+		{
 			transform.position+= new Vector3(0,-(moveMag/4),0);
 		}
-		if(childCube!=null)
-		if (!childCube.animation.IsPlaying("Take 0010") && destructionTime == true) setColour('K');
 
-		//	shitty flicker code for black cubes
-		//	uses the "default" layer, same as player sphere
-		//		therefore has the same lighting and cameras
-//		if(colour == 'K')
-//		{
-//			if (UnityEngine.Random.value <= 0.001)
-//			{
-//				gameObject.layer = 0;
-//			}
-//			else
-//			{
-//				gameObject.layer = 15;
-//			}
-//		}
+		//if the cube is despawning, and has finished that animation, remove the cube model
+		if(childCube!=null)
+		{
+			if (!childCube.animation.IsPlaying("Take 0010") && despawning == true)
+			{
+				//'K' results in no new cube model replacing the old
+				setColour('K');
+			}
+		}
 	}
 
 	public void setColour (int c)
 	{
-		/*
-		 * Pass in a value between 0-6 to set the
-		 * 	cube to the corresponding colour
-		 * 	(see private static char[] colourChars
-		 * 	at top of file)
-		 */
+		//Pass in a value between 0-6 to set the
+		// cube to the corresponding colour
+		// (see private static char[] colourChars
+		// at top of file)
 		colour = colourChars [c];
 		changeColour ();
 	}
 
-	public void destroy()
+	public void beginDestructionAnimation()
 	{
-
-		childCube.animation.Play ("Take 0010");
-		destructionTime = true;
-		//if (!childCube.animation.IsPlaying("Take 0010")
-
+		//Play destruction animation, and indicate that the state is despawning
+		if(childCube!=null)
+		{
+			childCube.animation.Play ("Take 0010");
+		}
+		despawning = true;
 	}
 
 
 	public void setColour (char c)
 	{
-		/*
-		 * Set the cube to become the colour
-		 * 	of the char c
-		 */
+
+		//Set the cube to become the colour
+		// of the char c
 		colour = c;
 		changeColour ();
 	}
 
 	public void setPlayer (bool presence)
 	{
+		//presence represents whether the player is above
+		// this cube or not
 		player = presence;
 	}
 
 	void changeColour()
 	{
-		/*
-		 * translates the stored char for colour into
-		 * 	a layer, so that the correct lights are
-		 * 	applied to this cube
-		 */
+		//translates the stored char for colour into
+		// a model, which is attached to this cube
 
 		if(childCube!=null)
 		{
+			//begin by removing the previous model
 			Destroy (childCube.gameObject);
 		}
 
-		
 		GameObject cubeType;
-		RuntimeAnimatorController Rac;
-
 
 		switch (colour)
 		{
@@ -159,39 +152,37 @@ public class ColourCube : MonoBehaviour, IComparable<ColourCube> {
 		default:
 			return;
 		}
-		
+
+		//create an instance of the cube model
 		childCube = (GameObject) Instantiate(cubeType, transform.position, Quaternion.identity);
 		childCube.transform.parent = transform;
-		childCube.transform.localPosition = new Vector3(0, -0.5f, 0);
-		//childCube.transform.localScale = Vector3.one * 4;
+		
+		//each cube has a random animation speed, so they don't animate in unison
 		Animation anim = childCube.gameObject.GetComponent<Animation>();
-		//animator.runtimeAnimatorController = Rac;
 		foreach (AnimationState state in anim) {
 			state.speed = UnityEngine.Random.value / 3 + .75f;
 		}
-
-		//childCube.animation.Play("Create");
 
 	}
 
 	public int CompareTo(ColourCube other)
 	{
-		/*
-		 * CompareTo enables sorting
-		 * 	cubes are sorted based on how recently
-		 * 	they were created
-		 */
+		//CompareTo enables sorting
+		// cubes are sorted based on how recently
+		// they were created
 		if(other == null)
 		{
 			return 1;
 		}
-
 		return (zDepth - other.zDepth);
 	}
 
 	public char getColour()
 	{
-		return colour;
+		if(!despawning)
+			return colour;
+		else
+			return 'K';
 	}
 
 }

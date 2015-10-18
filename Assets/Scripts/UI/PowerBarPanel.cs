@@ -11,6 +11,7 @@ public class PowerBarPanel : MonoBehaviour {
 	void Start () {
 		glow = 0.2f;
 
+		//hell yeah hard coding colours
 		colours = new Color[7];
 		colours[0] = new Color(.839f,.251f,0);
 		colours[1] = new Color(.448f,.902f,.129f);
@@ -28,11 +29,14 @@ public class PowerBarPanel : MonoBehaviour {
 		glow = (glow+0.05f)%0.5f;
 	}
 
+	//returns at what point the glow cycle is in
 	public float getGlow ()
 	{
 		return glow;
 	}
 
+	//returns a power bar value as a fraction
+	// of its maximum
 	public float getLength(int bar)
 	{
 		float l;
@@ -54,6 +58,7 @@ public class PowerBarPanel : MonoBehaviour {
 		return l / (float)player.powerLimit;
 	}
 
+	//returns what the colour of a bar should be
 	public Color getColour(int bar)
 	{
 		if(colours==null || colours.Length < 1)
@@ -62,13 +67,16 @@ public class PowerBarPanel : MonoBehaviour {
 		}
 		switch(bar)
 		{
+			//red bar
 		case 1:
 			if(!getRed () || (!getGreen() && !getBlue ()))
 			{
+				//no other colours
 				return colours[0];
 			}
 			if(getGreen() && getBlue())
 			{
+				//all colours
 				return colours[6];
 			}
 			if(getGreen())
@@ -80,13 +88,16 @@ public class PowerBarPanel : MonoBehaviour {
 				return colours[4];
 			}
 			break;
+			//green bar
 		case 2:
 			if(!getGreen () || (!getRed() && !getBlue ()))
 			{
+				//no other colours
 				return colours[1];
 			}
 			if(getRed() && getBlue())
 			{
+				//all colours
 				return colours[6];
 			}
 			if(getRed())
@@ -98,13 +109,16 @@ public class PowerBarPanel : MonoBehaviour {
 				return colours[3];
 			}
 			break;
+			//blue bar
 		case 3:
 			if(!getBlue () || (!getRed() && !getGreen ()))
 			{
+				//no other colours
 				return colours[2];
 			}
 			if(getRed() && getGreen())
 			{
+				//all colours
 				return colours[6];
 			}
 			if(getRed())
@@ -120,6 +134,7 @@ public class PowerBarPanel : MonoBehaviour {
 		return colours[6];
 	}
 
+	//if given bar is full, returns true
 	public bool isGlow(int bar)
 	{
 		switch(bar)
